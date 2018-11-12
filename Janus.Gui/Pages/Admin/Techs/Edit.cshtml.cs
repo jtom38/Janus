@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Janus.Domain.AppSettings;
 using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.Techs
 {
     public class EditModel : PageModel
     {
         private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public EditModel(JanusDbContext context)
+        public EditModel(JanusDbContext context, IOptions<AppSettings> options)
         {
             _context = context;
         }
@@ -31,7 +34,7 @@ namespace Janus.Gui.Pages.Admin.Techs
 
             //Techs = await _context.Techs.SingleOrDefaultAsync(m => m.Pk == id);
             Techs = await _context.Techs
-                .Where(x => x.TenantID == "debug")
+                .Where(x => x.TenantID ==_options.Value.Debug.TenantID)
                 .Where(x => x.ID == id)
                 .FirstOrDefaultAsync();
 

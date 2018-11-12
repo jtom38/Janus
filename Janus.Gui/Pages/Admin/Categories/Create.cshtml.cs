@@ -35,7 +35,7 @@ namespace Janus.Gui.Pages.Admin.Categories
                 return Page();
             }
 
-            Categories.ID = Guid.NewGuid().ToString();
+            Categories.ID = Guid.NewGuid();
             Categories.DateAdded = DateTime.Now;
             Categories.AddedBy = "User";
 

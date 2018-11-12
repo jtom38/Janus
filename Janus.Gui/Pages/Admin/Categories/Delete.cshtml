@@ -19,13 +19,13 @@
             </a>
         </li>
         <li>
-            <a asp-page="./Edit" asp-route-id="@Model.Categories.GUID">
+            <a asp-page="./Edit" asp-route-id="@Model.Categories.ID">
                 <img src="~/images/Navbar/icons8-edit-96.png" width="32" />
                 Edit
             </a>
         </li>
         <li>
-            <a asp-page="./Delete" asp-route-id="@Model.Categories.GUID">
+            <a asp-page="./Delete" asp-route-id="@Model.Categories.ID">
                 <img src="~/images/Navbar/icons8-delete-96.png" width="32" />
                 Delete
             </a>
@@ -74,7 +74,7 @@
             </div>
 
             <form method="post">
-                <input type="hidden" asp-for="Categories.GUID" />
+                <input type="hidden" asp-for="Categories.ID" />
                 <div class="btn-group">
                     <input type="submit" value="Delete" class="btn btn-primary" />
                 </div>

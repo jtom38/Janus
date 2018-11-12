@@ -49,7 +49,7 @@ namespace Janus.Gui.Controllers
 
         // PUT: api/Tickets/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTicket([FromRoute] string id, [FromBody] Ticket ticket)
+        public async Task<IActionResult> PutTicket([FromRoute] Guid  id, [FromBody] Ticket ticket)
         {
             if (!ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace Janus.Gui.Controllers
             return Ok(ticket);
         }
 
-        private bool TicketExists(string id)
+        private bool TicketExists(Guid id)
         {
             return _context.Tickets.Any(e => e.ID == id);
         }
