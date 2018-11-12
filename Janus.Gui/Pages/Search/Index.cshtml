@@ -1,0 +1,236 @@
+﻿@page
+@model Janus.Gui.Pages.Search.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">Objects</li>
+            <li><a asp-page="./Index" asp-route-ViewAction="tickets">Tickets</a></li>
+            <li><a asp-page="./Index" asp-route-ViewAction="computers">Computers</a></li>
+            <li><a asp-page="./Index" asp-route-ViewAction="network">Network</a></li>
+        </ul>
+    </div>
+
+    @if (Model.ViewAction == "default")
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid content-form-center">
+                <h4>Search</h4>
+                <hr />
+                <p>
+                    Select a object on the left to select what type of search you are looking to do.<br />
+                    <br />
+                    Notes:<br />
+                    String/Text values will be searched with contains term.<br />
+                    Int/Number values will look for exact terms
+                </p>
+            </div>
+        </div>
+
+    }
+
+    @if (Model.ViewAction.Equals("tickets"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid content-form-center">
+                <h4>Search - Tickets</h4>
+                <hr />
+                    <h5>Filters</h5>
+                    <form method="post">
+                        <label for="InputMessage">Message - Will use contains for search</label>
+                        <input type="text" class="form-control" placeholder="Field: Message" aria-describedby="InputMessage"
+                               asp-for="Tickets.Message" />
+
+                        <br />
+
+                        <label for="InputCategory">Category</label>
+                        <input type="text" class="form-control" placeholder="Field: Category" aria-describedby="InputCategory"
+                               asp-for="Tickets.CategoryID" />
+
+                        <br />
+
+                        <label for="InputSubCategory">SubCategory</label>
+                        <input type="text" class="form-control" placeholder="Field: SubCategory" aria-describedby="InputSubCategory"
+                               asp-for="Tickets.SubCategoryID" />
+
+                        <br />
+
+                        <label for="InputComputerName">Computer Name</label>
+                        <input type="text" class="form-control" placeholder="Field: Computer Name" aria-describedby="InputComputerName"
+                               asp-for="Tickets.ComputerID" />
+
+                        <br />
+
+                        <div class="form-group text-center">
+                            <input asp-route-ViewAction="results" type="submit" value="Search" class="btn btn-primary" />
+                        </div>
+                    </form>
+
+            </div>
+        </div>
+
+    }
+
+    @if (Model.ViewAction.Equals("computers"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid content-form-center">
+                <h4>Search - Computers</h4>
+                <hr />
+                <h5>Filters</h5>
+                <form method="post">
+                    <label for="InputComputerName">Computer Name</label>
+                    <input type="text" class="form-control" placeholder="Field: Computer Name" aria-describedby="InputComputerName"
+                           asp-for="Computers.ComputerName" />
+
+                    <br />
+
+                    <label for="InputDomain">Domain</label>
+                    <input type="text" class="form-control" placeholder="Field: Domain" aria-describedby="InputDomain"
+                           asp-for="Computers.Domain" />
+
+                    <br />
+
+                    <label for="InputModel">Model</label>
+                    <input type="text" class="form-control" placeholder="Field: Model" aria-describedby="InputModel"
+                           asp-for="Computers.Model" />
+
+                    <br />
+
+                    <label for="InputSkuNumber">Sku Number</label>
+                    <input type="text" class="form-control" placeholder="Field: Sku Number" aria-describedby="InputSkuNumber"
+                           asp-for="Computers.SkuNumber" />
+
+                    <br />
+
+                    <div class="form-group text-center">
+                        <input asp-route-ViewAction="results" type="submit" value="Search" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    @if (Model.ViewAction.Equals("network"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid content-form-center">
+                <h4>Search - Computers</h4>
+                <hr />
+                <h5>Filters</h5>
+                <form method="post">
+                    <label for="InputComputerName">IPv4 Address</label>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="InputComputerName"
+                           asp-for="Network.IpAddressV4" />
+
+                    <br />
+
+                    <label for="InputDomain">IPv6 Address</label>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="InputDomain"
+                           asp-for="Network.IpAddressV6" />
+
+                    <br />
+
+                    <label for="InputModel">MAC Address</label>
+                    <input type="text" class="form-control" placeholder="" aria-describedby="InputModel"
+                           asp-for="Network.MacAddress" />
+
+                    <br />
+
+                    <label for="InputSkuNumber">Sku Number</label>
+                    <input type="text" class="form-control" placeholder="Field: Sku Number" aria-describedby="InputSkuNumber"
+                           asp-for="Computers.SkuNumber" />
+
+                    <br />
+
+                    <label for="InputMacAddress">MAC Address</label>
+                    <input type="text" class="form-control" placeholder="00:00:00:00:00:00" aria-describedby="InputMacAddress"
+                           asp-for="Network.MacAddress" />
+
+
+                    <div class="form-group text-center">
+                        <input asp-route-ViewAction="results" type="submit" value="Search" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    }
+
+    @if (Model.ViewAction.Equals("results"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <h4>
+                    Ticket Results
+                    <span class="badge">@Model.ListTickets.Count()</span>
+                </h4>
+                <hr />
+
+                Search term:<br />
+                Select All [Tickets] Where Message contains [@Model.Tickets.Message]
+
+                <br />
+                <br />
+                @if (Model.ListTickets.Count >= 1)
+                {
+                    <p>Ticket Results: Found @Model.ListTickets.Count()</p>
+                }
+
+                <hr />
+
+                @if (Model.ListTickets.Count >= 1)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped table-responsive">
+                            <tr>
+                                <th class="text-center">Ticket Number</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ticket Owner</th>
+                                <th class="text-center">Submitted By</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">SubCategory</th>
+                                <th class="text-center">Logged</th>
+                            </tr>
+
+                            @foreach (var item in Model.ListTickets)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-page="/Tickets/Ticket" asp-route-id="@item.GUID" class="btn btn-primary btn-block">@item.TicketNumber</a>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.StatusID</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.TicketOwner</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.CategoryID</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.SubCategoryID</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.DateTimeCreated</button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+
+    }
+
+</div>

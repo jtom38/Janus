@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"] - Janus</title>
+    <environment include="Development">
+
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-cyborg - Copy.css" />
+    <link rel="stylesheet" href="~/css/simple-sidebar.css" />
+    <link rel="stylesheet" href="~/css/TopNavBar.css" />
+    <link rel="stylesheet" href="~/css/JanusLists.css" />
+    <link rel="stylesheet" href="~/css/custom-discord.css" />
+    <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+    <!--Top bar-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="navbar-header header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a asp-page="/Index" class="topnavbar-brand">Janus</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-inner">
+            <ul class="nav navbar-nav text-center">
+                <li>
+                    <a href="#" data-toggle="tooltip" title="Corgi">
+                        <img class="img-circle" src="~/images/Navbar/corgi_vector_128.png" width="32">
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Ticket/Index" data-toggle="tooltip" title="Tickets">
+                        <img class="img-circle" src="~/images/Navbar/icons8-ticket-96.png" width="32" />
+                    </a>
+                </li>
+                <li>
+                    <a asp-page="/Computers/Index" data-toggle="tooltip" title="Devices">
+                        <img class="" src="~/images/Navbar/icons8-monitor-96.png" width="32" />
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-page="/Reports/Index" data-toggle="tooltip" title="Reports">
+                        <img class="img-circle" src="~/images/Navbar/icons8-report-card-96 (1).png" width="32" />
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-page="/Search/Index" data-toggle="tooltip" title="Search">
+                        <img class="img-circle" src="~/images/Navbar/icons8-search-96.png" width="32" />
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-page="/Admin/Index" data-toggle="tooltip" title="Admin">
+                        <img class="img-circle" src="~/images/Navbar/icons8-services-96.png" width="32" />
+                    </a>
+                </li>
+            </ul>
+
+            <div class="topnavbar-inline hidden">
+                <div class="topnavbar-group">
+                    <input type="search" class="topnavbar-control" id="SearchToggle" />
+                    <img class="img-circle" src="~/images/Navbar/icons8-search-96.png" width="32" />
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!--Main Content-->
+    @RenderBody()
+
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

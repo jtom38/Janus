@@ -1,0 +1,337 @@
+﻿@page
+@model Janus.Gui.Pages.Ticket.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <!--Insert items for this page-->
+            <li class="sidebar-brand">Filters</li>
+            <li><a asp-page="/Tickets/Index" asp-route-filter="*">Everything</a></li>
+            <li><a asp-page="/Tickets/Index" asp-route-filter="AllOpen">All Open</a></li>
+            <li class="btn-group">
+                <a href="#" class="dropdown-toggle" type="button" id="TicketOwnerMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Ticket Owner
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="TicketOwnerMenu">
+                    @foreach (var i in Model.Techs)
+                    {
+                        string fullName = $"{i.FirstName} {i.LastName}";
+                        <li>
+                            <a asp-page="/Ticket/Index" asp-route-filterTicketOwner="@i.EmailAddress">@fullName</a>
+                        </li>
+                    }
+                </ul>
+            </li>
+            <li class="sidebar-brand">Actions</li>
+            <li>
+                <a asp-page="Create">
+                    <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                    New Item
+                </a>
+            </li>
+            <li>
+                <a asp-page="./Index">
+                    <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                    Back to List
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            @if (Model.Items == null)
+            {
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        Either the API is down or we found no data. Please try again. :)<br />
+                        If you see this several times please report this error.
+                    </div>
+                </div>
+            }
+            else
+            {
+                <h4>All Tickets - Active - Total @Model.Items.Count()</h4>
+                <hr />
+
+                if (Model.ViewMode.Equals("table"))
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped table-responsive">
+                            <tr>
+                                <th class="text-center">Ticket Number</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Ticket Owner</th>
+                                <th class="text-center">Submitted By</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">SubCategory</th>
+                                <th class="text-center">Logged</th>
+                            </tr>
+
+                            @foreach (var item in Model.Items)
+                            {
+                                int counter = 0;
+                                <tr>
+                                    <td>
+                                        <a asp-page="/Ticket/Item" asp-route-id="@item.GUID" class="btn btn-primary btn-block">@item.TicketNumber</a>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-page-handler="UpdateStatus">
+                                            <div asp-validation-summary="ModelOnly"></div>
+                                            <input type="hidden" asp-for="@Model.TicketInformation.GUID" value="@item.GUID" />
+                                            <div class="btn-group btn-block">
+                                                <button class="btn btn-default btn-block dropdown-toggle" type="button" id="@counter + categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    @item.StatusID
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="@counter + categoryMenu">
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="New" class="btn btn-default btn-block">
+                                                    </li>
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Assigned" class="btn btn-default btn-block">
+                                                    </li>
+
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Awaiting Input" class="btn btn-default btn-block">
+                                                    </li>
+
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="On Hold" class="btn btn-default btn-block">
+                                                    </li>
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="In Progress" class="btn btn-default btn-block">
+                                                    </li>
+
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Resolved" class="btn btn-default btn-block">
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.TicketOwner</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.CategoryID</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.SubCategoryID</button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default disabled btn-block">@item.DateTimeCreated</button>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                }
+
+                if (Model.ViewMode.Equals("card"))
+                {
+                    foreach (var item in Model.Items)
+                    {
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                            <div class="card-shell ">
+                                <div class="card-header">
+                                    <p>
+                                        <img src="~/images/Navbar/corgi_vector_128.png" class="img-circle card-header-img" width="64" />
+                                        <h5 class="text-left"> @item.CreatedBy</h5>
+                                        <h5 class="text-left"> @item.TicketOwner</h5>
+                                    </p>
+                                </div>
+                                <div class="card-row">
+                                    <p class="text-center">
+                                        <h5>@item.Title</h5>
+                                        @item.Message<br />
+                                    </p>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a href="" data-toggle="modal" data-target="#myModal">
+                                        <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32" />
+                                    </a>
+                                    <a asp-page="./Ticket" asp-route-id="@item.GUID">
+                                        <img src="~/images/Navbar/icons8-view-details-96.png" width="32" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card-shell ">
+                            <div class="card-header">
+                                <p>
+                                    <img src="~/images/Navbar/corgi_vector_128.png" class="img-circle card-header-img" width="64" />
+                                    <h5 class="text-left"> James Tombleson</h5>
+                                    <h5 class="text-left"> James Tombleson</h5>
+                                </p>
+                            </div>
+                            <div class="card-row">
+                                <p class="text-center">
+                                    <h5>Title</h5>
+                                    Message<br />
+                                </p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a asp-page="">
+                                    <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32" 
+                                         data-toggle="tooltip" title="Quick View"/>
+                                </a>
+                                <a asp-action="">
+                                    <img src="~/images/Navbar/icons8-view-details-96.png" width="32" 
+                                         data-toggle="tooltip" title="Open"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card-shell">
+                            <div class="card-header ">
+                                <p>
+                                    <img src="~/images/Navbar/corgi_vector_128.png" class="img-circle card-header-img" width="64" />
+                                    <h5 class="text-left">Liz W.</h5>
+                                    <h5 class="text-left">James T.</h5>
+                                </p>
+                            </div>
+                            <div class="card-row">
+                                <p>
+                                    <h5>VMware Upgrades</h5>
+                                    Up am intention on dependent questions oh elsewhere september. No betrayed pleasure possible jointure we in throwing. And can event rapid any shall woman green. Hope they dear who its bred. Smiling nothing affixed he carried it clothes calling he no. Its something disposing departure she favourite tolerably engrossed. Truth short folly court why she their balls. Excellence put unaffected reasonable mrs introduced conviction she. Nay particular delightful but unpleasant for uncommonly who.
+
+                                    If wandered relation no surprise of screened doubtful. Overcame no insisted ye of trifling husbands. Might am order hours on found. Or dissimilar companions friendship impossible at diminution. Did yourself carriage learning she man its replying. Sister piqued living her you enable mrs off spirit really. Parish oppose repair is me misery. Quick may saw style after money mrs. <br />
+                                </p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="#" data-toggle="modal" data-target="#myModal">
+                                    <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card-shell">
+                            <div class="card-header ">
+                                <p>
+                                    <img src="~/images/Navbar/corgi_vector_128.png" class="img-circle card-header-img" width="64" />
+                                    <h5 class="text-left">SubmittedBy</h5>
+                                    <h5 class="text-left">TicketOwner</h5>
+                                </p>
+
+                            </div>
+                            <div class="card-row">
+                                <p class="text-center">
+                                    <h5>Title</h5>
+                                    Message<br />
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" data-toggle="modal" data-target="#myModal">
+                                    <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card-shell">
+                            <div class="card-header ">
+                                <p>
+                                    <img src="~/images/Navbar/corgi_vector_128.png" class="img-circle card-header-img" width="64" />
+                                    <h5 class="text-left">SubmittedBy</h5>
+                                    <h5 class="text-left">TicketOwner</h5>
+                                </p>
+
+                            </div>
+                            <div class="card-row">
+                                <p class="text-center">
+                                    <h5>Title</h5>
+                                    Message<br />
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" data-toggle="modal" data-target="#myModal">
+                                    <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+
+                if (Model.ViewMode.Equals("panel"))
+                {
+                    <div class="long-card-shell">
+                        <div class="long-card-header">
+                            <ul>
+                                <li>
+                                    <img src="~/images/Navbar/corgi_vector_128.png" class="img-circle card-header-img" width="64" />
+                                </li>
+                                <li>
+                                    <label>Requestor</label><br />
+                                    <h5>James Tombleson</h5>
+                                </li>
+                                <li>
+                                    <label>Tech</label><br />
+                                    <h5> James Tombleson</h5>
+                                </li>
+                            </ul>
+                            <a asp-page="">
+                                <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32"
+                                     data-toggle="tooltip" title="Quick View" />
+                            </a>
+                            <a asp-action="">
+                                <img src="~/images/Navbar/icons8-view-details-96.png" width="32"
+                                     data-toggle="tooltip" title="Open" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="panel-default">
+                        <div class="panel-heading">
+                            <img src="~/images/Navbar/corgi_vector_128.png" class="img-circle card-header-img" width="64" />
+
+                            <label>Requestor</label><br />
+                            <h5>James Tombleson</h5>
+
+                            <label>Tech</label><br />
+                            <h5> James Tombleson</h5>
+
+                            <a asp-page="">
+                                <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32"
+                                     data-toggle="tooltip" title="Quick View" />
+                            </a>
+                            <a asp-action="">
+                                <img src="~/images/Navbar/icons8-view-details-96.png" width="32"
+                                     data-toggle="tooltip" title="Open" />
+                            </a>
+
+                        </div>
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

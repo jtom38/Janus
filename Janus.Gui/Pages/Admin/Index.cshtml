@@ -1,0 +1,17 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<!--/Admin/Index-->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        @await Html.PartialAsync("./funcMenu.cshtml")
+    </ul>
+</div>
+
+<div id="page-content-wrapper">
+    <h2>Index</h2>
+</div>
+
+

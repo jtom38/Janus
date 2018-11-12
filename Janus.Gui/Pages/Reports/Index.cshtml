@@ -1,0 +1,106 @@
+﻿@page
+@model Janus.Gui.Pages.Reports.IndexModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+
+    </div>
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h3>Reports</h3>
+            <br />
+
+            <div class="col-md-3">
+
+                <div class="caption">
+                    <div class="card-shell">
+                        <div class="card-header">
+                            <h4 class="text-center">All Active Tickets</h4>
+                        </div>
+                        <div class="card-row">
+                            <p class="text-center">
+                                Added By: AddedBy<br />
+                            </p>
+                        </div>
+                        <div class="card-footer">
+
+                            <a asp-page="./Details" data-toggle="tooltip" title="Open">
+                                <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32" />
+                            </a>
+                            <a asp-page="./Details" asp-route-id="GUID"
+                               data-toggle="tooltip" title="Open Details">
+                                <img src="~/images/Navbar/icons8-view-details-96.png" width="32" />
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                        <div class="panel panel-info" id="TicketInformation">
+                            <div class="panel-heading clickable" role="tab" id="TicketInfo">
+                                <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#TicketData" aria-expanded="true" aria-controls="TicketData">Ticket Reports</h3>
+                            </div>
+                            <div id="TicketData" class="panel-collapse collapse" role="tabpanel" aria-labelledby="TicketInfo">
+                                <div class="panel-body">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading text-center">
+                                                    <h3 class="panel-title">All Active Tickets</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <button type="button" class="btn btn-primary btn-lg btn-block">View In Client</button>
+                                                    <button type="button" class="btn btn-primary btn-lg btn-block">Generate Report</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading text-center">
+                                                    <h3 class="panel-title">Open Tickets By Client</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <button type="button" class="btn btn-primary btn-lg btn-block">View Report</button>
+                                                    <button type="button" class="btn btn-primary btn-lg btn-block">Generate Report</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading text-center">
+                                                    <h3 class="panel-title">Placeholder</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <button type="button" class="btn btn-primary btn-lg btn-block">View Report</button>
+                                                    <button type="button" class="btn btn-primary btn-lg btn-block">Generate Report</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

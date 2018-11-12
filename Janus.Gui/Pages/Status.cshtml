@@ -1,0 +1,30 @@
+﻿@page
+@model Janus.Gui.Pages.StatusModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Database Status</div>
+            <div class="panel-body">
+                Database is currently SQLite. It is always online.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">API Status</div>
+            <div class="panel-body">
+                
+            </div>
+        </div>
+    </div>
+</div>

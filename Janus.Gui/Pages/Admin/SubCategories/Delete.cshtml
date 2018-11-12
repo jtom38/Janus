@@ -1,0 +1,34 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.SubCategories.DeleteModel
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SubCategories</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategories.Value)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubCategories.Value)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategories.DateAdded)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubCategories.DateAdded)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategories.AddedBy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubCategories.AddedBy)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="SubCategories.GUID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

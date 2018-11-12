@@ -1,0 +1,144 @@
+﻿@page
+@model Janus.Gui.Pages.Computers.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">Filters</li>
+            <li>
+                <a href="#">
+                    <img src="~/images/Navbar/icons8-online-96.png" width="32" />
+                    All Online
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="~/images/Navbar/icons8-offline-96.png" width="32" />
+                    All Offline
+                </a>
+            </li>
+            <li> <a asp-page="#" asp-route-filterTicketOwner="Desktop">All Desktops</a> </li>
+            <li> <a asp-page="#" asp-route-filterTicketOwner="Laptop">All Laptops</a> </li>
+            <li> <a asp-page="#" asp-route-filterTicketOwner="Server">All Servers</a> </li>
+
+            <li class="sidebar-brand">Actions</li>
+            <li>
+                <a asp-page="./Index">
+                    <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                    Back to List
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    @if (Model.ViewMode.Equals("table"))
+    {
+        <div id="page-content-wrapper">
+            <h4>Computer Monitor</h4>
+            <hr />
+            <table class="table table-striped">
+                <tr>
+                    <th>Computer Name</th>
+                    <th>Last Report</th>
+                    <th>Current Status</th>
+                    <th></th>
+                </tr>
+                
+                <tr>
+                    <td class="text-vertical-align-middle">
+                        DMI-DEV01
+                    </td>
+                    <td class="text-vertical-align-middle">
+                        3/01/2018
+                    </td>
+                    <td class="text-vertical-align-middle">
+                        Offline
+                    </td>
+                    <td class="text-vertical-align-middle">
+                        <a asp-page="/Computers/Details" asp-route-id="debug">
+                            <img src="~/images/Navbar/icons8-view-details-96.png" width="32"
+                                 data-toggle="tooltip" title="Open" />
+                        </a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+    }
+
+    @if (Model.ViewMode.Equals("card"))
+    {
+
+
+    }
+
+    @if (Model.ViewMode.Equals("panel"))
+    {
+        <div id="page-content-wrapper">
+            <div class="jlist-wrapper">
+                <div class="jlist jlist-default " id="HardwareInformation">
+                    <div class="jlist-heading " role="tab" id="HardwareInfo">
+                        <div class="jlist-title" data-toggle="collapse" data-parent="#accordion" href="#HardwareData" aria-expanded="false" aria-controls="HardwareData">
+                            <ul class="list-inline">
+                                <li>
+                                    <img src="~/images/Navbar/icons8-monitor-96.png" width="32" />
+                                    DEV-01.directorsmortgage.net
+                                </li>
+                                <li class="pull-right">
+                                    <img src="~/images/Navbar/icons8-online-96.png" width="32" />
+                                    Online
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="HardwareData" class="jlist-collapse collapse" role="tabjlist" aria-labelledby="HardwareInfo">
+                        <div class="jlist-body">
+                            <ul class="list-unstyled">
+                                <li>
+                                    Operating System: Windows Server 2016 Standard
+                                </li>
+                                <li>Last Online: Now</li>
+                                <li>Current Janus Services:</li>
+                                <li>Client Access Tests: Yes</li>
+                                <li>SysLog Gateway: No</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jlist jlist-default " id="HardwareInformation">
+                    <div class="jlist-heading " role="tab" id="HardwareInfo">
+                        <div class="jlist-title" data-toggle="collapse" data-parent="#accordion" href="#HardwareData" aria-expanded="false" aria-controls="HardwareData">
+                            <ul class="list-inline">
+                                <li>
+                                    <img src="~/images/Navbar/icons8-monitor-96.png" width="32" />
+                                    DEV-01.directorsmortgage.net
+                                </li>
+                                <li class="pull-right">
+                                    <img src="~/images/Navbar/icons8-offline-96.png" width="32" />
+                                    Online
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="HardwareData" class="jlist-collapse collapse" role="tabjlist" aria-labelledby="HardwareInfo">
+                        <div class="jlist-body">
+                            Data at a glance!
+                            <
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    
+    
+</div>

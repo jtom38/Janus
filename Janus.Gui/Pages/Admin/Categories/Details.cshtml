@@ -1,0 +1,79 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.Categories.DetailsModel
+
+@{ 
+    ViewData["Title"] = "Categories - Details";
+}
+<!--/Admin/Categories/Details-->
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="Create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Edit" asp-route-id="@Model.Categories.GUID">
+                <img src="~/images/Navbar/icons8-edit-96.png" width="32" />
+                Edit
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Delete" asp-route-id="@Model.Categories.GUID">
+                <img src="~/images/Navbar/icons8-delete-96.png" width="32" />
+                Delete
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+
+            <h4>Categories</h4>
+            <hr />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="@Model.Categories.Value" class="control-label">Value</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Categories.Value)" readonly />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label for="AddedBy" class="control-label">Added By</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Categories.AddedBy)" readonly />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label for="DateAdded" class=" control-label">DateAdded</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Categories.DateAdded)" readonly />
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    
+</div>

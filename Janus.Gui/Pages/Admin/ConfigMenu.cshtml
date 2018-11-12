@@ -1,0 +1,29 @@
+﻿
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ConfigNav" aria-expanded="false">
+            <span class="sr-only">Toggle Nav</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+    </div>
+    <div class="collapse navbar-collapse" id="ConfigNav">
+        <ul class="nav nav-pills nav-stacked">
+            <li> <a asp-page="/Admin/Clients/Index">Clients</a> </li>
+            <li> <a asp-page="/Admin/Categories/Index">Categories</a> </li>
+            <li> <a asp-page="/Admin/SubCategories/Index">Sub Categories</a> </li>
+            <li> <a asp-page="/Admin/TicketStatus/Index">Status</a> </li>
+
+            <li class="nav-divider"></li>
+            <li><a asp-page="/Clients">Windows Event Logs</a></li>
+            <li><a asp-page="/Clients">SysLog</a></li>
+
+            <li class="nav-divider"></li>
+            <li><a asp-page="/Clients">Users</a></li>
+            <li><a asp-page="/Admin/Techs/Index">Technicians</a></li>
+            <li><a asp-page="/Clients">Roles</a></li>
+        </ul>
+    </div>
+</div>

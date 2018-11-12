@@ -1,0 +1,61 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.SubCategories.CreateModel
+
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <h4>SubCategories</h4>
+        <hr />
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SubCategories.GUID" class="control-label"></label>
+                <input asp-for="SubCategories.GUID" class="form-control" />
+                <span asp-validation-for="SubCategories.GUID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubCategories.Value" class="control-label"></label>
+                <input asp-for="SubCategories.Value" class="form-control" />
+                <span asp-validation-for="SubCategories.Value" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubCategories.DateAdded" class="control-label"></label>
+                <input asp-for="SubCategories.DateAdded" class="form-control" />
+                <span asp-validation-for="SubCategories.DateAdded" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubCategories.AddedBy" class="control-label"></label>
+                <input asp-for="SubCategories.AddedBy" class="form-control" />
+                <span asp-validation-for="SubCategories.AddedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

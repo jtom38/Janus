@@ -1,0 +1,52 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.Categories.CreateModel
+
+@{
+    ViewData["Title"] = "Categories - Add";
+}
+<!--/Admin/Categories/Create-->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("./funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+
+        <h4>Categories</h4>
+        <hr />
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Categories.Value" class="control-label">Value</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Categories.Value" class="form-control" />
+                        <span asp-validation-for="Categories.Value" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group btn-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

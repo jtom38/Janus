@@ -1,0 +1,159 @@
+﻿@page
+@model Janus.Gui.Pages.Computers.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!--/Computers/Details/-->
+
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+
+            <li class="sidebar-brand">Actions</li>
+            <li>
+                <a asp-page="./Index">
+                    <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                    Back to List
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    @if (Model.ViewMode.Equals("table"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <h5>@Model.Item.ComputerName</h5>
+                <hr />
+                <br />
+
+                <h5>Bios</h5>
+                <hr />
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>Manufacturer</th>
+                        <th>Serial Number</th>
+                        <th>Version</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>@Model.Item.BiosName</td>
+                        <td>@Model.Item.BiosManufacturer</td>
+                        <td>@Model.Item.BiosSerialNumber</td>
+                        <td>@Model.Item.BiosVersion</td>
+                        <td>@Model.Item.BiosStatus</td>
+                    </tr>
+                </table>
+
+                <br />
+                <h5>Drives</h5>
+                <hr />
+                <table class="table table-striped">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>File System</th>
+                        <th>Total Space</th>
+                        <th>Free Space</th>
+                        <th>Serial Number</th>
+                    </tr>
+                    @foreach (var i in Model.ListDrives)
+                    {
+                        <tr>
+                            <td>@i.Name</td>
+                            <td>@i.Description</td>
+                            <td>@i.FileSystem</td>
+                            <td>@i.TotalSpace</td>
+                            <td>@i.FreeSpace</td>
+                            <td>@i.SerialNumber</td>
+                        </tr>
+
+                    }
+
+                </table>
+
+
+                <br />
+                <h5>Network</h5>
+                <hr />
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>Description</th>
+                        <th>Ipv4</th>
+                        <th>Ipv6</th>
+                        <th>Mac Address</th>
+                        <th>Subnet</th>
+                        <th>Gateway</th>
+                        <th>DNS01</th>
+                        <th>DNS02</th>
+                        <th>Dhcp Enabled</th>
+                        <th>Dhcp Server</th>
+                        <th>DNS Domain</th>
+                    </tr>
+
+                    @foreach(var i in Model.ListNetwork)
+                    {
+                        <tr>
+                            <td>@i.Description</td>
+                            <td>@i.IpAddressV4</td>
+                            <td>@i.IpAddressV6</td>
+                            <td>@i.MacAddress</td>
+                            <td>@i.SubNet</td>
+                            <td>@i.Gateway</td>
+                            <td>@i.DNS01</td>
+                            <td>@i.DNS02</td>
+                            <td>@i.DhcpEnabled</td>
+                            <td>@i.DhcpServer</td>
+                            <td>@i.DnsDomain</td>
+                        </tr>
+
+                    }
+                </table>
+
+                <br />
+                <h5>Windows Updates</h5>
+                <hr />
+                <table class="table table-striped">
+                    <tr>
+                        <th>Hotfix ID</th>
+                        <th>Description</th>
+                        <th>Date Installed</th>
+                        <th>Caption</th>
+                    </tr>
+
+                    @foreach(var i in Model.ListWindowsUpdates)
+                    {
+                        <tr>
+                            <td>@i.HotFixID</td>
+                            <td>@i.Description</td>
+                            <td>@i.InstalledOn</td>
+                            <td>
+                                <a href="@i.Caption">@i.Caption</a>
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+
+        </div>
+    }
+    @if (Model.ViewMode.Equals("card"))
+    {
+
+
+    }
+
+    @if (Model.ViewMode.Equals("panel"))
+    {
+
+
+    }
+
+
+</div>

@@ -1,0 +1,46 @@
+﻿@page
+@model IEnumerable<Janus.Model.Data.Collections.Clients>
+@{
+    int counter = 0;
+
+    foreach (var item in Model)
+    {
+        string panel = $"Panel{counter}";
+        string panelid = $"PanelId{counter}";
+        string data = $"data{counter}";
+        <div class="col-md-3">
+
+            <div class="caption">
+                <div class="card-shell">
+                    <div class="card-header">
+                        <h4 class="text-center">@item.CompanyName</h4>
+                    </div>
+                    <div class="card-row">
+                        <p class="text-center">
+                            Main Contact: @item.MainContact<br />
+                            Phone Number: @item.PhoneNumber<br />
+                            Address: @item.Address, @item.City, @item.State<br />
+                        </p>
+                        <br />
+                    </div>
+                    <div class="card-footer">
+
+                        <div class="panel panel-default" id="@panel">
+                            <div class="panel-heading" role="tab" id="@panel">
+                                <h3 class="panel-title text-center" data-toggle="collapse" data-parent="#accordion" href="#@data" aria-expanded="false" aria-controls="@data">Actions</h3>
+                            </div>
+                            <div id="@data" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@panel">
+                                <div class="panel-body">
+                                    <a asp-page="./Edit" asp-route-id="@item.GUID" class="btn btn-default btn-block">Edit</a>
+                                    <a asp-page="./Details" asp-route-id="@item.GUID" class="btn btn-default btn-block">Details</a>
+                                    <a asp-page="./Delete" asp-route-id="@item.GUID" class="btn btn-default btn-block">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        counter++;
+    }
+}

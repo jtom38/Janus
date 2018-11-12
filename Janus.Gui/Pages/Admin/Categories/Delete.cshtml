@@ -1,0 +1,86 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.Categories.DeleteModel
+
+@{
+    ViewData["Title"] = "Categories - Delete";
+}
+<!--/Admin/Categories/Delete-->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="Create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Edit" asp-route-id="@Model.Categories.GUID">
+                <img src="~/images/Navbar/icons8-edit-96.png" width="32" />
+                Edit
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Delete" asp-route-id="@Model.Categories.GUID">
+                <img src="~/images/Navbar/icons8-delete-96.png" width="32" />
+                Delete
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="page-content-wrapper">
+
+    <div class="container-fluid">
+        <h3>Are you sure you want to delete this?</h3>
+        <div>
+            <h4>Categories</h4>
+            <hr />
+            <div class="dl-horizontal">
+                <div class="form-control">
+                    <div class="col-md-2">
+                        @Html.DisplayNameFor(model => model.Categories.Value)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Categories.Value)
+                    </div>
+                </div>
+                <div class="form-control">
+                    <div class="col-md-2">
+                        @Html.DisplayNameFor(model => model.Categories.DateAdded)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Categories.DateAdded)
+                    </div>
+                </div>
+                <div class="form-control">
+                    <div class="col-md-2">
+                        @Html.DisplayNameFor(model => model.Categories.AddedBy)
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Categories.AddedBy)
+                    </div>
+                </div>
+            </div>
+
+            <form method="post">
+                <input type="hidden" asp-for="Categories.GUID" />
+                <div class="btn-group">
+                    <input type="submit" value="Delete" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+

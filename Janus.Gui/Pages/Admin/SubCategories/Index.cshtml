@@ -1,0 +1,286 @@
+﻿@page
+
+@model Janus.Gui.Pages.Admin.SubCategories.IndexModel
+
+
+@{
+    ViewData["Title"] = "Admin - SubCategories";
+}
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="./Index" asp-route-ViewAction="create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+
+            <!--
+    <a asp-page="Create">
+        <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+        New Item
+    </a>
+        -->
+        </li>
+        <li>
+            <a asp-page="./Index" asp-route-ViewMode="table">
+                <img src="~/images/Navbar/icons8-data-sheet-96.png" width="32" />
+                Table View
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Index" asp-route-ViewMode="card">
+                <img src="~/images/Navbar/icons8-control-panel-96.png" width="32" />
+                Card View
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+@if (Model.ViewAction.Equals("index") && Model.ViewMode.Equals("card"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+
+            <h4>SubCategories</h4>
+            <hr />
+
+            @{
+                int counter = 0;
+
+                foreach (var item in Model.SubCatList)
+                {
+                    string panel = $"Panel{counter}";
+                    string panelid = $"PanelId{counter}";
+                    string data = $"data{counter}";
+                    <div class="col-md-3">
+
+                        <div class="caption">
+                            <div class="card-shell">
+                                <div class="card-header">
+                                    <h4 class="text-center">@item.Value</h4>
+                                </div>
+                                <div class="card-row">
+                                    <p class="text-center">
+                                        Added By: @item.AddedBy<br />
+                                        Date Added: @item.DateAdded<br />
+                                    </p>
+                                    <br />
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.GUID">
+                                        <img src="~/images/Navbar/icons8-edit-96.png" width="32" 
+                                             data-toggle="tooltip" title="Edit"/>
+                                    </a>
+                                    <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.GUID" >
+                                        <img src="~/images/Navbar/icons8-view-details-96.png" width="32" 
+                                             data-toggle="tooltip" title="Details"/>
+                                    </a>
+                                    <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.GUID">
+                                        <img src="~/images/Navbar/icons8-delete-96.png" width="32"
+                                             data-toggle="tooltip" title="Delete"/>    
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    counter++;
+                }
+            }
+
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("index") && Model.ViewMode.Equals("table"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h4>SubCategories</h4>
+            <hr />
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubCatList[0].Value)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubCatList[0].DateAdded)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SubCatList[0].AddedBy)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.SubCatList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Value)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateAdded)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AddedBy)
+                                </td>
+                                <td>
+                                    <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.GUID">Edit</a> |
+                                    <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.GUID">Details</a> |
+                                    <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.GUID">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("create"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h4>SubCategories</h4>
+            <hr />
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SubCat.Value" class="control-label"></label>
+                    <input asp-for="SubCat.Value" class="form-control" />
+                    <span asp-validation-for="SubCat.Value" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("delete"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h4>SubCategories</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.SubCat.Value)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SubCat.Value)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.SubCat.DateAdded)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SubCat.DateAdded)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.SubCat.AddedBy)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SubCat.AddedBy)
+                </dd>
+            </dl>
+
+            <form method="post">
+                <input type="hidden" asp-for="SubCat.GUID" />
+                <input type="submit" value="Delete" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-default">Back to List</a>
+            </form>
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("edit"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h4>SubCategories</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="SubCat.GUID" />
+                        <div class="form-group">
+                            <label asp-for="SubCat.Value" class="control-label"></label>
+                            <input asp-for="SubCat.Value" class="form-control" />
+                            <span asp-validation-for="SubCat.Value" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SubCat.DateAdded" class="control-label"></label>
+                            <input asp-for="SubCat.DateAdded" class="form-control" />
+                            <span asp-validation-for="SubCat.DateAdded" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SubCat.AddedBy" class="control-label"></label>
+                            <input asp-for="SubCat.AddedBy" class="form-control" />
+                            <span asp-validation-for="SubCat.AddedBy" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <a asp-page="./Index" class="btn btn-default">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("details"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h4>SubCategories</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.SubCat.Value)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SubCat.Value)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.SubCat.DateAdded)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SubCat.DateAdded)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.SubCat.AddedBy)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SubCat.AddedBy)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-page="./Edit" asp-route-id="@Model.SubCat.GUID" class="btn btn-primary">Edit</a>
+            <a asp-page="./Index" class="btn btn-default">Back to List</a>
+        </div>
+    </div>
+
+}

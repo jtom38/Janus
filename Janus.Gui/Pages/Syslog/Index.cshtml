@@ -1,0 +1,56 @@
+﻿@page
+@model Janus.Gui.Pages.Syslog.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">Filters</li>
+            <li>
+                <a href="#">
+                    <img src="~/images/Navbar/icons8-online-96.png" width="32" />
+                    All Online
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="~/images/Navbar/icons8-offline-96.png" width="32" />
+                    All Offline
+                </a>
+            </li>
+            <li> <a asp-page="#" asp-route-filterTicketOwner="Desktop">All Desktops</a> </li>
+            <li> <a asp-page="#" asp-route-filterTicketOwner="Laptop">All Laptops</a> </li>
+            <li> <a asp-page="#" asp-route-filterTicketOwner="Server">All Servers</a> </li>
+
+            <li class="sidebar-brand">Actions</li>
+            <li>
+                <a asp-page="./Index">
+                    <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                    Back to List
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    @if (Model.ViewMode.Equals("table"))
+    {
+
+
+    }
+
+    @if (Model.ViewMode.Equals("card"))
+    {
+
+
+    }
+
+    @if (Model.ViewMode.Equals("panel"))
+    {
+
+
+    }
+</div>
+

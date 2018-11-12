@@ -1,0 +1,106 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.NewFolder.EditModel
+
+<!--/Admin/Client/Edit-->
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="Create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <h4>Clients</h4>
+        <hr />
+
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Clients.GUID" />
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Clients.CompanyName" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Clients.CompanyName" class="form-control" />
+                        <span asp-validation-for="Clients.CompanyName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Clients.MainContact" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Clients.MainContact" class="form-control" />
+                        <span asp-validation-for="Clients.MainContact" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Clients.PhoneNumber" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Clients.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Clients.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Clients.State" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Clients.State" class="form-control" />
+                        <span asp-validation-for="Clients.State" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Clients.City" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Clients.City" class="form-control" />
+                        <span asp-validation-for="Clients.City" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Clients.Address" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Clients.Address" class="form-control" />
+                        <span asp-validation-for="Clients.Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group btn-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

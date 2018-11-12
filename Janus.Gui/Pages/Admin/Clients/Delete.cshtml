@@ -1,0 +1,95 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.NewFolder.DeleteModel
+<!--/Admin/Clients/Delete-->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="Create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Edit" asp-route-id="@Model.Clients.GUID">
+                <img src="~/images/Navbar/icons8-edit-96.png" width="32" />
+                Edit
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Delete" asp-route-id="@Model.Clients.GUID">
+                <img src="~/images/Navbar/icons8-delete-96.png" width="32" />
+                Delete
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <h3>Are you sure you want to delete this?</h3>
+        <div>
+            <h4>Clients</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clients.CompanyName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Clients.CompanyName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clients.MainContact)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Clients.MainContact)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clients.PhoneNumber)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Clients.PhoneNumber)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clients.State)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Clients.State)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clients.City)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Clients.City)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clients.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Clients.Address)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Clients.DateTimeLogged)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Clients.DateTimeLogged)
+                </dd>
+            </dl>
+
+            <form method="post">
+                <input type="hidden" asp-for="Clients.GUID" />
+                <input type="submit" value="Delete" class="btn btn-default" />
+            </form>
+        </div>
+    </div>
+</div>
+

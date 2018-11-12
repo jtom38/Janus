@@ -1,0 +1,392 @@
+﻿@page
+@model Janus.Gui.Pages.Ticket.TicketModel
+@{
+    ViewData["Title"] = "Ticket";
+}
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">Ticket Details</li>
+            <li><a href="#">Comments</a></li>
+            <li><a href="#">Notes</a></li>
+
+            @if (string.IsNullOrEmpty(Model.TicketInformation.ComputerID))
+            {
+                <li class="sidebar-brand">Computer Details</li>
+                <li><a asp-page="./Ticket" asp-route-ViewAction="hardrive" asp-route-id="@Model.TicketInformation.GUID">Hard Drives</a></li>
+                <li><a asp-page="./Ticket" asp-route-ViewAction="network">Network</a></li>
+                <li><a asp-page="./Ticket" asp-route-ViewAction="updates">Windows Updates</a></li>
+                <li><a asp-page="./Ticket" asp-route-ViewAction="client">Client</a></li>
+
+            }
+
+
+            <li class="sidebar-brand">Actions</li>
+            <li>
+                <a asp-page="./Index">
+                    <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                    Back to List
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    @if (Model.ViewAction.Equals("ticket"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <a href="#menu-toggle" id="menu-toggle" class="visible-xs visible-sm hidden-md hidden-lg">test</a>
+
+                <div class="content-form-center">
+                    <h4>Ticket #@Model.TicketInformation.TicketNumber - Ticket Title</h4>
+                    <hr />
+
+                    <h4>Ticket Information</h4>
+                    <br />
+                    <div class="form-group">
+                        <label for="InputMessage">Message</label>
+                        <textarea id="InputMessage" readonly class="form-control">@Model.TicketInformation.Message</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputSubmittedBy">Submitted By</label>
+                        <input type="text" class="form-control" id="InputSubmittedBy" placeholder="[SubmittedBy] Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputAssignedTech">Assigned Tech</label>
+                        <select class="form-control" id="InputAssignedTech">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputStatus">Status</label>
+                        <select class="form-control" id="InputStatus">
+                            <option value="New">New</option>
+                            <option value="Assigned">Assigned</option>
+                            <option value="Awaiting Input">Awaiting Input</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputCategory">Category</label>
+                        <select class="form-control">
+                            <option>Load From API</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputSubCategory">SubCategory</label>
+                        <select class="form-control">
+                            <option>Load From API</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputDateStarted">Started</label>
+                        <input type="date" class="form-control" id="InputDateStarted" placeholder="@Model.TicketInformation.DateTimeStarted" readonly />
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.TicketInformation.DateTimeFinished))
+                    {
+                        <div class="form-group">
+                            <label for="InputDateFinished"></label>
+                            <input type="date" class="form-control" id="InputDateFinished" placeholder="@Model.TicketInformation.DateTimeFinished" readonly />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5>Ticket Finished</h5>
+                            </div>
+                            <div class="col-md-10">
+                                @Model.TicketInformation.DateTimeFinished
+                            </div>
+                        </div>
+                    }
+
+                    <!--
+    This is an archive block
+    <div class="col-md-2">Status</div>
+    <div class="col-md-4">
+        <form method="post" asp-page-handler="UpdateStatus">
+            <div asp-validation-summary="ModelOnly"></div>
+            <input type="hidden" asp-for="TicketInformation.GUID" />
+            <button class="btn btn-default dropdown-toggle" type="button" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                @Model.TicketInformation.StatusID
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="categoryMenu">
+                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="New" class="btn btn-default btn-block"> </li>
+                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Assigned" class="btn btn-default btn-block"> </li>
+                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Awaiting Input" class="btn btn-default btn-block"> </li>
+                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="On Hold" class="btn btn-default btn-block"> </li>
+                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="In Progress" class="btn btn-default btn-block"> </li>
+                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Resolved" class="btn btn-default btn-block"> </li>
+            </ul>
+        </form>
+    </div>
+        -->
+
+
+                    <hr />
+
+                    <h4>Comments</h4>
+                    @if (Model.TicketComments.Count() >= 1)
+                    {
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>Posted by</td>
+                                <td>Message</td>
+                                <td>Time Stamp</td>
+                            </tr>
+                            @{
+                                <!--Loop the data here for comments-->
+                                foreach (var item in Model.TicketComments)
+                                {
+                                    <tr>
+                                        <td>@item.PostedBy</td>
+                                        <td>@item.Message</td>
+                                        <td>@item.DateTimeCreated</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    }
+
+                    <br />
+                    <form method="post">
+                        <textarea asp-for="NewComment.Message" class="form-control" rows="3" id="comment"></textarea>
+                        <br />
+
+                        <button type="button" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+
+                </div>
+            </div>
+    }
+
+    @if (Model.ViewAction.Equals("computer"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="panel panel-default" id="HardwareInformation">
+                    <div class="panel-heading" role="tab" id="HardwareInfo">
+                        <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#HardwareData" aria-expanded="false" aria-controls="HardwareData">Hardware Information</h3>
+                    </div>
+                    <div id="HardwareData" class="panel-collapse collapse" role="tabpanel" aria-labelledby="HardwareInfo">
+                        <div class="panel-body">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-6"></th>
+                                        <th class="col-md-6"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>HostName</td> <td>@Model.ComputerInfo.ComputerName</td> </tr>
+                                    <tr> <td>Domain</td> <td>@Model.ComputerInfo.Domain</td> </tr>
+                                    <tr> <td>Manufacturer</td> <td>@Model.ComputerInfo.Manufacturer</td> </tr>
+                                    <tr> <td>Model</td> <td>@Model.ComputerInfo.Model</td> </tr>
+                                    <tr> <td>Ram</td> <td>@Model.ComputerInfo.RAM</td> </tr>
+                                    <tr> <td>Sku Number</td> <td>@Model.ComputerInfo.SkuNumber</td></tr>
+                                    <tr> <td>Bios Manufacturer</td> <td>@Model.ComputerInfo.BiosManufacturer</td> </tr>
+                                    <tr> <td>Bios Name</td> <td>@Model.ComputerInfo.BiosName</td> </tr>
+                                    <tr> <td>Bios Version</td> <td>@Model.ComputerInfo.BiosVersion</td> </tr>
+                                    <tr> <td>Bios Status</td> <td>@Model.ComputerInfo.BiosStatus</td> </tr>
+                                    <tr> <td>Bios Serial Number</td> <td>@Model.ComputerInfo.BiosSerialNumber</td> </tr>
+                                    <tr> <td>Updated</td> <td>@Model.ComputerInfo.DateTimeUpdated</td> </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.ViewAction.Equals("hardrive"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                @{
+                    int hdCounter = 0;
+                    foreach (var item in Model.HdInfo)
+                    {
+
+                        string info = "HardDriveInfo" + hdCounter;
+                        string infor = "HardDriveInfor" + hdCounter;
+                        string ddata = "#HardDriveData" + hdCounter;
+                        string data = "HardDriveData" + hdCounter;
+                        <div class="panel panel-default" id="@infor">
+                            <div class="panel-heading" role="tab" id="@info">
+                                <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="@ddata" aria-expanded="false" aria-controls="@data">Hard Drive Information - @item.Name</h3>
+                            </div>
+                            <div id="@data" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@info">
+                                <div class="panel-body">
+                                    <table class="table table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td class="col-md-6"></td>
+                                                <td class="col-md-6"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr> <td>Name</td> <td>@item.Name</td> </tr>
+                                            <tr> <td>Description</td> <td>@item.Description</td> </tr>
+                                            <tr> <td>File System</td> <td>@item.FileSystem</td> </tr>
+                                            <tr> <td>Serial Number</td> <td>@item.SerialNumber</td> </tr>
+                                            <tr> <td>Free Space</td> <td>@item.FreeSpace</td> </tr>
+                                            <tr> <td>Total Space</td> <td>@item.TotalSpace</td> </tr>
+                                            <tr> <td>Updated</td> <td>@item.DateTimeEdited</td> </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        hdCounter++;
+                    }
+                }
+            </div>
+        </div>
+    }
+
+    @if (Model.ViewAction.Equals("network"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                @{
+                    int netCounter = 0;
+                    foreach (var item in Model.NetInfo)
+                    {
+
+                        string info = "NetworkInfo" + netCounter;
+                        string infor = "NetworkInfor" + netCounter;
+                        string ddata = "#NetworkData" + netCounter;
+                        string data = "NetworkData" + netCounter;
+
+                        <div class="panel panel-default" id="@info">
+                            <div class="panel-heading" role="tab" id="@info">
+                                <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="@ddata" aria-expanded="false" aria-controls="@data">Network Information - @item.Description</h3>
+                            </div>
+                            <div id="@data" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@info">
+                                <div class="panel-body">
+                                    <table class="table table-condensed table-striped">
+                                        <thead>
+                                            <tr> <td class="col-md-6"></td> <td class="col-md-6"></td> </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr> <td>Domain</td>        <td>@item.DnsDomain</td> </tr>
+                                            <tr> <td>MAC Address</td>   <td>@item.MacAddress</td> </tr>
+                                            <tr> <td>IPv4 Address</td>  <td>@item.IpAddressV4</td> </tr>
+                                            <tr> <td>IPv6 Address</td>  <td>@item.IpAddressV6</td> </tr>
+                                            <tr> <td>Subnet Mask</td>   <td>@item.SubNet</td> </tr>
+                                            <tr> <td>Gateway</td>       <td>@item.Gateway</td> </tr>
+                                            <tr> <td>DHCP Enabled</td>  <td>@item.DhcpEnabled</td> </tr>
+                                            <tr> <td>DHCP Server</td>   <td>@item.DhcpServer</td> </tr>
+                                            <tr> <td>DNS1</td>          <td>@item.DNS01</td> </tr>
+                                            <tr> <td>DNS2</td>          <td>@item.DNS02</td> </tr>
+                                            <tr> <td>Reported In</td>   <td>@item.DateTimeAdded</td> </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        netCounter++;
+                    }
+                }
+            </div>
+        </div>
+
+    }
+
+    @if (Model.ViewAction.Equals("updates"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="panel panel-default" id="UpdateInformation">
+                    <div class="panel-heading" role="tab" id="UpdateInfo">
+                        <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#UpdateData" aria-expanded="false" aria-controls="UpdateData">Windows Updates</h3>
+                    </div>
+                    <div id="UpdateData" class="panel-collapse collapse" role="tabpanel" aria-labelledby="UpdateInfo">
+                        <div class="panel-body">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr> <td class="col-md-6">Hotfix ID</td> <td class="col-md-6">Installed On</td> </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model.WinUpdates)
+                                        {
+                                            <tr> <td>@item.HotFixID</td> <td>@item.InstalledOn</td> </tr>
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    @if (Model.ViewAction.Equals("client"))
+    {
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="panel panel-default" id="ClientInformation">
+                    <div class="panel-heading" role="tab" id="ClientInfo">
+                        <h3 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#ClientData" aria-expanded="false" aria-controls="ClientData">Client Information</h3>
+                    </div>
+                    <div id="ClientData" class="panel-collapse collapse" role="tabpanel" aria-labelledby="ClientInfo">
+                        <div class="panel-body">
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <td class="col-md-6"></td>
+                                        <td class="col-md-6"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Company</td>
+                                        <td>Tesla, Inc.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>State</td>
+                                        <td>CA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>Palo Alto</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Business Partner</td>
+                                        <td>Elon Musk</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

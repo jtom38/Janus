@@ -1,0 +1,77 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.Categories.EditModel
+
+@{ 
+    ViewData["Title"] = "Categories - Edit";
+}
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="Create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="page-content-wrapper">
+
+    <div class="container-fluid">
+        <h4>Categories</h4>
+        <hr />
+
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Categories.GUID" />
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Categories.Value" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Categories.Value" class="form-control" />
+                        <span asp-validation-for="Categories.Value" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Categories.DateAdded" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Categories.DateAdded" class="form-control" />
+                        <span asp-validation-for="Categories.DateAdded" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label asp-for="Categories.AddedBy" class="control-label"></label>
+                    </div>
+                    <div class="col-md-10">
+                        <input asp-for="Categories.AddedBy" class="form-control" />
+                        <span asp-validation-for="Categories.AddedBy" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group btn-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

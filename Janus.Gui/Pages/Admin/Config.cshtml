@@ -1,0 +1,108 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.ConfigModel
+
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+
+@{ 
+    Layout = "~/Pages/ef/newui.cshtml";
+}
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+*@
+
+<ol class="breadcrumb">
+    <li><a asp-page="/Index">Home</a></li>
+    <li class="active">Configuration</li>
+</ol>
+
+<br />
+
+<div class="row">
+    <div class="col-md-2">
+       
+
+    </div>
+    <div class="col-md-10">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+
+
+            <div class="panel panel-default" id="WinEventInfor">
+                <div class="panel-heading" role="tab" id="WinEventsInfo">
+                    <h4 class="panel-title text-center" data-toggle="collapse"data-parent="#accordion" href="#WinEventsData" aria-expanded="false" aria-controls="WinEventsData">Windows Events</h4>
+                </div>
+                <div id="WinEventsData" class="panel-collapse collapse" role="tabpanel" aria-labelledby="WinEventInfo">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img src="~/images/Config/CaptionPlaceholder.svg" alt="..." />
+                                    <div class="caption">
+                                        <h3 class="text-center">Clients</h3>
+                                        <p>Use this to configure the clients you have tied to your account.</p>
+                                        <p>
+                                            <a asp-page="./Clients/Index" class="btn btn-primary btn-block">Index</a>
+                                            <a asp-page="./Clients/Create" class="btn btn-primary btn-block">Add</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img src="~/images/Config/CaptionPlaceholder.svg" alt="..." />
+                                    <div class="caption">
+                                        <h3 class="text-center">
+                                            <span>
+                                                Status
+                                            </span>
+                                        </h3>
+                                        <p>Use this to change the list of selectable items for ticket status.</p>
+                                        <p>
+                                            <a asp-page="./Clients/Index" class="btn btn-primary btn-block">Index</a>
+                                            <a asp-page="./Clients/Create" class="btn btn-primary btn-block">Add</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img src="~/images/Config/CaptionPlaceholder.svg" alt="..." />
+                                    <div class="caption">
+                                        <h3 class="text-center">Categories</h3>
+                                        <p>Use this to configure what Categories are useable in tickets.</p>
+                                        <p>
+                                            <a asp-page="./Clients/Index" class="btn btn-primary btn-block">Index</a>
+                                            <a asp-page="./Clients/Create" class="btn btn-primary btn-block">Add</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <img src="~/images/Config/CaptionPlaceholder.svg" alt="..." />
+                                    <div class="caption">
+                                        <h3 class="text-center">Sub Category</h3>
+                                        <p>Use this to configure what Sub Categories are useable in tickets.</p>
+                                        <p>
+                                            <a asp-page="./Clients/Index" class="btn btn-primary btn-block">Index</a>
+                                            <a asp-page="./Clients/Create" class="btn btn-primary btn-block">Add</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

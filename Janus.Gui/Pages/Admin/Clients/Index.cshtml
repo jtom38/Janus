@@ -1,0 +1,447 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.Clients.IndexModel
+
+@{
+    ViewData["Title"] = "Admin - Clients";
+}
+<!--/Admin/Clients/Index-->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="./Index" asp-route-ViewAction="create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+        </li>
+        <li>
+            <a asp-page="/Admin/Clients/Index" asp-route-ViewMode="table">
+                <img src="~/images/Navbar/icons8-data-sheet-96.png" width="32" />
+                Table View
+            </a>
+        </li>
+        <li>
+            <a asp-page="/Admin/Clients/Index" asp-route-ViewMode="card">
+                <img src="~/images/Navbar/icons8-control-panel-96.png" width="32" />
+                Card View
+            </a>
+        </li>
+    </ul>
+</div>
+
+@if (Model.ViewAction.Equals("index") && Model.ViewMode.Equals("card"))
+{
+    <div id="page-content-wrapper">
+        <h4>Clients</h4>
+        <hr />
+        <div class="container-fluid">
+
+            @{
+                int counter = 0;
+
+                foreach (var item in Model.CliList)
+                {
+                    string panel = $"Panel{counter}";
+                    string panelid = $"PanelId{counter}";
+                    string data = $"data{counter}";
+                    <div class="col-md-3">
+
+                        <div class="caption">
+                            <div class="card-shell">
+                                <div class="card-header">
+                                    <h4 class="text-center">@item.CompanyName</h4>
+                                </div>
+                                <div class="card-row">
+                                    <p class="text-center">
+                                        Main Contact: @item.MainContact<br />
+                                        Phone Number: @item.PhoneNumber<br />
+                                        Address: @item.Address, @item.City, @item.State<br />
+                                    </p>
+                                    <br />
+                                </div>
+                                <div class="card-footer">
+
+                                    <div class="panel panel-default" id="@panel">
+                                        <div class="panel-heading" role="tab" id="@panel">
+                                            <h3 class="panel-title text-center" data-toggle="collapse" data-parent="#accordion" href="#@data" aria-expanded="false" aria-controls="@data">Actions</h3>
+                                        </div>
+                                        <div id="@data" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@panel">
+                                            <div class="panel-body">
+                                                <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.GUID" class="btn btn-default btn-block">Edit</a>
+                                                <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.GUID" class="btn btn-default btn-block">Details</a>
+                                                <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.GUID" class="btn btn-default btn-block">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    counter++;
+                }
+            }
+
+        </div>
+    </div>
+}
+
+@if (Model.ViewAction.Equals("index") && Model.ViewMode.Equals("table"))
+{
+    <div id="page-content-wrapper">
+        <h4>Clients</h4>
+        <hr />
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CliList[0].CompanyName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CliList[0].MainContact)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CliList[0].PhoneNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CliList[0].State)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CliList[0].City)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CliList[0].Address)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CliList)
+                    {
+                        <tr>
+                            <td class="text-capitalize">
+                                @Html.DisplayFor(modelItem => item.CompanyName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MainContact)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@item.GUID" class="btn btn-primary">
+                                    Edit
+                                </a>
+                                <a asp-page="./Details" asp-route-id="@item.GUID" class="btn btn-primary">
+                                    Details
+                                </a>
+                                <a asp-page="./Delete" asp-route-id="@item.GUID" class="btn btn-primary">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("create"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-flex">
+            <h4>Clients</h4>
+            <hr />
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.CompanyName" class="control-label">Company Name</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.CompanyName" class="form-control" />
+                            <span asp-validation-for="Cli.CompanyName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.MainContact" class="control-label">Main Contact</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.MainContact" class="form-control" />
+                            <span asp-validation-for="Cli.MainContact" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.PhoneNumber" class="control-label">Phone Number</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.PhoneNumber" class="form-control" />
+                            <span asp-validation-for="Cli.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.State" class="control-label">State</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.State" class="form-control" />
+                            <span asp-validation-for="Cli.State" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.City" class="control-label">City</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.City" class="form-control" />
+                            <span asp-validation-for="Cli.City" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.Address" class="control-label">Address</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.Address" class="form-control" />
+                            <span asp-validation-for="Cli.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group btn-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <a asp-page="Index" class="btn btn-default">Back to List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("delete"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div>
+                <h4>Clients - Delete</h4>
+                <h5>Are you sure you want to delete this?</h5>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cli.CompanyName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Cli.CompanyName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cli.MainContact)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Cli.MainContact)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cli.PhoneNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Cli.PhoneNumber)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cli.State)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Cli.State)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cli.City)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Cli.City)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cli.Address)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Cli.Address)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Cli.DateTimeLogged)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Cli.DateTimeLogged)
+                    </dd>
+                </dl>
+
+                <form method="post">
+                    <input type="hidden" asp-for="Cli.GUID" />
+                    <div class="form-group btn-group">
+                        <input type="submit" value="Delete" class="btn btn-primary" />
+                        <a asp-page="Index" class="btn btn-default">Back to List</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("details"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h4>Clients - Details</h4>
+            <hr />
+            <div class="form-group">
+                <label for="CompanyName" class="col-md-2 control-label">Company Name</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Cli.CompanyName)" readonly />
+                </div>
+
+                <label for="MainContact" class="col-md-2 control-label">Main Contact</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Cli.MainContact)" readonly />
+                </div>
+
+                <label for="CompanyName" class="col-md-2 control-label">Phone Number</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Cli.PhoneNumber)" readonly />
+                </div>
+
+                <label for="CompanyName" class="col-md-2 control-label">State</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Cli.State)" readonly />
+                </div>
+
+                <label for="CompanyName" class="col-md-2 control-label">City</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Cli.City)" readonly />
+                </div>
+
+                <label for="CompanyName" class="col-md-2 control-label">Address</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Cli.Address)" readonly />
+                </div>
+
+                <label for="CompanyName" class="col-md-2 control-label">Logged</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Cli.DateTimeLogged)" readonly />
+                </div>
+            </div>
+
+            <div class="btn btn-group center-block">
+                <a asp-page="./Edit" asp-route-id="@Model.Cli.GUID" class="btn btn-primary">Edit</a>
+                <a asp-page="./Index" class="btn btn-default">Back to List</a>
+            </div>
+        </div>
+    </div>
+
+}
+
+@if (Model.ViewAction.Equals("edit"))
+{
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <h4>Clients - Edit</h4>
+            <hr />
+
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Cli.GUID" />
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.CompanyName" class="control-label"></label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.CompanyName" class="form-control" />
+                            <span asp-validation-for="Cli.CompanyName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.MainContact" class="control-label"></label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.MainContact" class="form-control" />
+                            <span asp-validation-for="Cli.MainContact" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.PhoneNumber" class="control-label"></label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.PhoneNumber" class="form-control" />
+                            <span asp-validation-for="Cli.PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.State" class="control-label"></label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.State" class="form-control" />
+                            <span asp-validation-for="Cli.State" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.City" class="control-label"></label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.City" class="form-control" />
+                            <span asp-validation-for="Cli.City" class="text-danger"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <label asp-for="Cli.Address" class="control-label"></label>
+                        </div>
+                        <div class="col-md-10">
+                            <input asp-for="Cli.Address" class="form-control" />
+                            <span asp-validation-for="Cli.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn btn-default">Back to List</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

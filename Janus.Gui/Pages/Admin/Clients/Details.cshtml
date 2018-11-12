@@ -1,0 +1,80 @@
+﻿@page
+@model Janus.Gui.Pages.Admin.NewFolder.DetailsModel
+<!--/Admin/Clients/Details-->
+
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <!--Load in the Configuration Items-->
+        @await Html.PartialAsync("../funcMenu.cshtml")
+
+        <!--Insert items for this page-->
+        <li class="sidebar-brand">Options</li>
+        <li>
+            <a asp-page="Create">
+                <img src="~/images/Navbar/icons8-plus-96.png" width="32" />
+                New Item
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Edit" asp-route-id="@Model.Clients.GUID">
+                <img src="~/images/Navbar/icons8-edit-96.png" width="32" />
+                Edit
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Delete" asp-route-id="@Model.Clients.GUID">
+                <img src="~/images/Navbar/icons8-delete-96.png" width="32" />
+                Delete
+            </a>
+        </li>
+        <li>
+            <a asp-page="./Index">
+                <img src="~/images/Navbar/icons8-back-96.png" width="32" />
+                Back to List
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="page-content-wrapper">
+    <div class="form-group">
+        <label for="CompanyName" class="col-md-2 control-label">Company Name</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Clients.CompanyName)" readonly />
+        </div>
+
+        <label for="MainContact" class="col-md-2 control-label">Main Contact</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Clients.MainContact)" readonly />
+        </div>
+
+        <label for="CompanyName" class="col-md-2 control-label">Phone Number</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Clients.PhoneNumber)" readonly />
+        </div>
+
+        <label for="CompanyName" class="col-md-2 control-label">State</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Clients.State)" readonly />
+        </div>
+
+        <label for="CompanyName" class="col-md-2 control-label">City</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Clients.City)" readonly />
+        </div>
+
+        <label for="CompanyName" class="col-md-2 control-label">Address</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Clients.Address)" readonly />
+        </div>
+
+        <label for="CompanyName" class="col-md-2 control-label">Logged</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" placeholder="@Html.DisplayFor(model => model.Clients.DateTimeLogged)" readonly />
+        </div>
+    </div>
+
+    <div class="btn btn-group center-block">
+        
+        
+    </div>
+</div>
