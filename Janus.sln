@@ -28,8 +28,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Janus.Persistence", "Janus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Janus.Infrastructure", "Janus.Infrastructure\Janus.Infrastructure.csproj", "{345AB06C-2541-44D6-807D-9A7A300D506D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Janus.Persistence.MongoDb", "Janus.Persistence.MongoDb\Janus.Persistence.MongoDb.csproj", "{0521AA28-0816-4DB1-B114-EB0822A5AB0B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,10 +58,6 @@ Global
 		{345AB06C-2541-44D6-807D-9A7A300D506D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{345AB06C-2541-44D6-807D-9A7A300D506D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{345AB06C-2541-44D6-807D-9A7A300D506D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0521AA28-0816-4DB1-B114-EB0822A5AB0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0521AA28-0816-4DB1-B114-EB0822A5AB0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0521AA28-0816-4DB1-B114-EB0822A5AB0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0521AA28-0816-4DB1-B114-EB0822A5AB0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,7 +72,6 @@ Global
 		{7DC17475-BEA7-49D9-B0A0-EDEB45798EB3} = {A461E76E-E049-465B-8530-5E61BAC78DB1}
 		{A5C642CC-CFBF-4FA1-B0F6-D05AC7E3D814} = {F32602D8-862D-4C92-833D-E274C5C0BB70}
 		{345AB06C-2541-44D6-807D-9A7A300D506D} = {F32602D8-862D-4C92-833D-E274C5C0BB70}
-		{0521AA28-0816-4DB1-B114-EB0822A5AB0B} = {F32602D8-862D-4C92-833D-E274C5C0BB70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5489D3C-1179-410D-9E6F-0BDDA163653B}

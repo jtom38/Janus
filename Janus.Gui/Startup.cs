@@ -1,4 +1,4 @@
-using Janus.Infrastructure.AppSettings;
+using Janus.Domain.AppSettings;
 using Janus.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -32,9 +32,6 @@ namespace Janus.Gui
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.Configure<Debug>(
-                Configuration.GetSection(nameof(Debug)));
-
             // Authentication - WIP
             services.AddAuthentication(options =>
             {
@@ -62,6 +59,12 @@ namespace Janus.Gui
 
             services.AddDbContext<JanusDbContext>(options =>
                 options.UseSqlServer("Server=localhost\\sqlexpress;Database=Janus;Trusted_Connection=True;Application Name=Janus;"));
+
+            // Lets us use IOptions<T> with DI
+            services.AddOptions();
+            
+            // We can now DI everything under AppSettings in the json.
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddMemoryCache();
             services.AddSession();                       

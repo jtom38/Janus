@@ -19,8 +19,4 @@
     <PackageReference Include="NSwag.SwaggerGeneration.WebApi" Version="11.18.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Janus.Model\Janus.Model.csproj" />
-  </ItemGroup>
-
 </Project>

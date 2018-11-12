@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Janus.Infrastructure.AppSettings
+namespace Janus.Domain.AppSettings
 {
     public class Debug
     {

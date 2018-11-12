@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Janus.Domain.AppSettings;
 using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Computers
 {
@@ -13,10 +15,12 @@ namespace Janus.Gui.Pages.Computers
     {
 
         private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public IndexModel(JanusDbContext context)
+        public IndexModel(JanusDbContext context, IOptions<AppSettings> options)
         {
             _context = context;
+            _options = options;
         }
 
         [BindProperty]
@@ -38,7 +42,7 @@ namespace Janus.Gui.Pages.Computers
             if (string.IsNullOrEmpty(ViewMode)) { ViewMode = "table"; }
 
             ListComputer = await _context.ComputerIDs.AsQueryable<Domain.Entities.ComputerID>()
-                .Where(x => x.TenantID == "debug")
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .ToListAsync();
         }
     }

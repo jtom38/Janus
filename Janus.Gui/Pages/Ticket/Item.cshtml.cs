@@ -6,6 +6,9 @@ using System.Linq;
 using Janus.Domain.Entities;
 using Janus.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Janus.Domain.AppSettings;
+using Microsoft.Extensions.Options;
+using System;
 
 namespace Janus.Gui.Pages.Ticket
 {
@@ -13,10 +16,12 @@ namespace Janus.Gui.Pages.Ticket
     {
         //private readonly JanusGUI.Models.DatabaseContext _context;
         private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public TicketModel(JanusDbContext context)
+        public TicketModel(JanusDbContext context, IOptions<AppSettings> options)
         {
             _context = context;
+            _options = options;
         }
 
         //[TempData]
@@ -52,7 +57,7 @@ namespace Janus.Gui.Pages.Ticket
         [BindProperty(SupportsGet = true)]
         public string ViewAction { get; set; }
 
-        public async Task<IActionResult> OnGet(string id)
+        public async Task<IActionResult> OnGet(Guid id)
         {
             if (id == null)
             {
@@ -62,15 +67,16 @@ namespace Janus.Gui.Pages.Ticket
 
             if (ViewAction.Equals("ticket"))
             {
-                TicketInformation = await _context.Tickets.AsQueryable<Janus.Domain.Entities.Ticket>()
-                    .Where(x => x.TenantID == "debug")
+                TicketInformation = await _context.Tickets
+                    .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                     .Where(x => x.ID == id)
                     .FirstOrDefaultAsync();
-
-                TicketComments = await _context.TicketComments.AsQueryable<TicketComments>()
-                .Where(x => x.TenantID == "debug")
+                /*
+                TicketComments = await _context.TicketComments
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .Where(x => x.ID == id)
                 .ToListAsync();
+                */
             }
             else if (ViewAction.Equals("computer"))
             {

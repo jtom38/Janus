@@ -16,6 +16,7 @@ namespace Janus.Persistence
         public DbSet<HardDrives> HardDrives { get; set; }
         public DbSet<Network> Network { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<SubCategories> SubCategories { get; set; }
         public DbSet<Techs> Techs { get; set; }
         public DbSet<TenantID> TenantIDs { get; set; }
         public DbSet<Ticket> Tickets { get; set; }

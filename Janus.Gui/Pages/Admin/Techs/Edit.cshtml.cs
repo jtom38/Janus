@@ -22,7 +22,7 @@ namespace Janus.Gui.Pages.Admin.Techs
         [BindProperty]
         public Domain.Entities.Techs Techs { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             if (id == null)
             {
@@ -70,11 +70,11 @@ namespace Janus.Gui.Pages.Admin.Techs
             return RedirectToPage("./Index");
         }
 
-        private bool TechsExists(string id)
+        private bool TechsExists(Guid id)
         {
             //return _context.Techs.Any(e => e.Pk == id);
             return _context.Techs
-                .Any(x => x.GUID == id);
+                .Any(x => x.ID == id);
         }
     }
 }

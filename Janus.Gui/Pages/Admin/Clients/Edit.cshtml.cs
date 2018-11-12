@@ -2,27 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.NewFolder
 {
     public class EditModel : PageModel
     {
-        private DatabaseContext _context;
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public EditModel()
+        public EditModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _options = options;
         }
 
         [BindProperty]
-        public Model.Data.Collections.Clients Clients { get; set; }
+        public Domain.Entities.Clients Clients { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             if (id == null)
             {
@@ -30,9 +33,9 @@ namespace Janus.Gui.Pages.Admin.NewFolder
             }
 
             //Clients = await _context.Clients.SingleOrDefaultAsync(m => m.Pk == id);
-            Clients = await _context.ClientsCollection.AsQueryable<Model.Data.Collections.Clients>()
-                .Where(x => x.TenantID == "debug")
-                .Where(x => x.GUID == id)
+            Clients = await _context.Clients
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
+                .Where(x => x.ID == id)
                 .FirstOrDefaultAsync();
 
             if (Clients == null)
@@ -49,15 +52,15 @@ namespace Janus.Gui.Pages.Admin.NewFolder
                 return Page();
             }
 
-            //_context.Attach(Clients).State = EntityState.Modified;
+            _context.Attach(Clients).State = EntityState.Modified;
 
             try
             {
-                //await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                if (!ClientsExists(Clients.GUID))
+                if (!ClientsExists(Clients.ID))
                 {
                     return NotFound();
                 }
@@ -70,10 +73,9 @@ namespace Janus.Gui.Pages.Admin.NewFolder
             return RedirectToPage("./Index");
         }
 
-        private bool ClientsExists(string id)
+        private bool ClientsExists(Guid id)
         {
-            //return _context.Clients.Any(e => e.Pk == id);
-            return _context.ClientsCollection.AsQueryable<Model.Data.Collections.Clients>().Any(x => x.GUID == id);
+            return _context.Clients.Any(e => e.ID == id);            
         }
     }
 }
