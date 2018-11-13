@@ -8,7 +8,7 @@ namespace Janus.Domain.Entities
     {
         public Categories()
         {
-            Tickets = new HashSet<Tickets>();
+            Tickets = new HashSet<Ticket>();
         }
 
         public Guid ID { get; set; }

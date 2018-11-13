@@ -26,7 +26,7 @@ namespace Janus.Domain.Entities
         public string Description { get; set; }
         public string DnsDomain { get; set; }
 
-        public ICollection<ComputerID> Computers { get; private set; }
+        public ICollection<ComputerID> Computers { get; set; }
 
         public Guid TenantID { get; set; }
     }
