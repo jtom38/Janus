@@ -14,7 +14,7 @@ namespace Janus.Gui
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel()
-                .UseUrls("https://localhost:5000/")
+                .UseUrls("https://localhost:44337/")
                 .Build();
     }
 }

@@ -71,9 +71,9 @@
                                         </div>
                                         <div id="@data" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@panel">
                                             <div class="panel-body">
-                                                <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.GUID" class="btn btn-default btn-block">Edit</a>
-                                                <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.GUID" class="btn btn-default btn-block">Details</a>
-                                                <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.GUID" class="btn btn-default btn-block">Delete</a>
+                                                <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.ID" class="btn btn-default btn-block">Edit</a>
+                                                <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.ID" class="btn btn-default btn-block">Details</a>
+                                                <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.ID" class="btn btn-default btn-block">Delete</a>
                                             </div>
                                         </div>
                                     </div>
@@ -144,13 +144,13 @@
                                 @Html.DisplayFor(modelItem => item.Address)
                             </td>
                             <td>
-                                <a asp-page="./Edit" asp-route-id="@item.GUID" class="btn btn-primary">
+                                <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-primary">
                                     Edit
                                 </a>
-                                <a asp-page="./Details" asp-route-id="@item.GUID" class="btn btn-primary">
+                                <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-primary">
                                     Details
                                 </a>
-                                <a asp-page="./Delete" asp-route-id="@item.GUID" class="btn btn-primary">Delete</a>
+                                <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-primary">Delete</a>
                             </td>
                         </tr>
                     }
@@ -296,7 +296,7 @@
                 </dl>
 
                 <form method="post">
-                    <input type="hidden" asp-for="Cli.GUID" />
+                    <input type="hidden" asp-for="Cli.ID" />
                     <div class="form-group btn-group">
                         <input type="submit" value="Delete" class="btn btn-primary" />
                         <a asp-page="Index" class="btn btn-default">Back to List</a>
@@ -353,7 +353,7 @@
             </div>
 
             <div class="btn btn-group center-block">
-                <a asp-page="./Edit" asp-route-id="@Model.Cli.GUID" class="btn btn-primary">Edit</a>
+                <a asp-page="./Edit" asp-route-id="@Model.Cli.ID" class="btn btn-primary">Edit</a>
                 <a asp-page="./Index" class="btn btn-default">Back to List</a>
             </div>
         </div>
@@ -370,7 +370,7 @@
 
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Cli.GUID" />
+                <input type="hidden" asp-for="Cli.ID" />
 
                 <div class="form-horizontal">
                     <div class="form-group">

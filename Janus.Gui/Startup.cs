@@ -45,26 +45,19 @@ namespace Janus.Gui
                     options.PageViewLocationFormats.Add("/Pages/Partials/{0}.cshtml");
                 });
 
-            // MongoDb Settings
-            /*
-            services.Configure<MongoSettings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoDb:ConnectionString").Value;
-                options.Database = Configuration.GetSection("MongoDb:Database").Value;
-            });
-
-            // Add DB Connection
-            services.AddTransient<IJanusDbContext, JanusDbContext>();
-            */
-
+            /* // If you want to use this on MsSql here you go
             services.AddDbContext<JanusDbContext>(options =>
                 options.UseSqlServer("Server=localhost\\sqlexpress;Database=Janus;Trusted_Connection=True;Application Name=Janus;"));
+            */
 
             // Lets us use IOptions<T> with DI
             services.AddOptions();
             
             // We can now DI everything under AppSettings in the json.
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            services.AddDbContext<JanusDbContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
 
             services.AddMemoryCache();
             services.AddSession();                       

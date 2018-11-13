@@ -6,6 +6,11 @@ namespace Janus.Domain.Entities
 {
     public class HardDrives
     {
+        public HardDrives()
+        {
+            ComputerID = new HashSet<ComputerID>();
+        }
+
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

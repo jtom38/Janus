@@ -74,15 +74,15 @@
                                     <br />
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.GUID">
+                                    <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.ID">
                                         <img src="~/images/Navbar/icons8-edit-96.png" width="32" 
                                              data-toggle="tooltip" title="Edit"/>
                                     </a>
-                                    <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.GUID" >
+                                    <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.ID" >
                                         <img src="~/images/Navbar/icons8-view-details-96.png" width="32" 
                                              data-toggle="tooltip" title="Details"/>
                                     </a>
-                                    <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.GUID">
+                                    <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.ID">
                                         <img src="~/images/Navbar/icons8-delete-96.png" width="32"
                                              data-toggle="tooltip" title="Delete"/>    
                                     </a>
@@ -136,9 +136,9 @@
                                     @Html.DisplayFor(modelItem => item.AddedBy)
                                 </td>
                                 <td>
-                                    <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.GUID">Edit</a> |
-                                    <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.GUID">Details</a> |
-                                    <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.GUID">Delete</a>
+                                    <a asp-page="./Index" asp-route-ViewAction="edit" asp-route-id="@item.ID">Edit</a> |
+                                    <a asp-page="./Index" asp-route-ViewAction="details" asp-route-id="@item.ID">Details</a> |
+                                    <a asp-page="./Index" asp-route-ViewAction="delete" asp-route-id="@item.ID">Delete</a>
                                 </td>
                             </tr>
                         }
@@ -201,7 +201,7 @@
             </dl>
 
             <form method="post">
-                <input type="hidden" asp-for="SubCat.GUID" />
+                <input type="hidden" asp-for="SubCat.ID" />
                 <input type="submit" value="Delete" class="btn btn-primary" />
                 <a asp-page="./Index" class="btn btn-default">Back to List</a>
             </form>
@@ -220,7 +220,7 @@
                 <div class="col-md-4">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="SubCat.GUID" />
+                        <input type="hidden" asp-for="SubCat.ID" />
                         <div class="form-group">
                             <label asp-for="SubCat.Value" class="control-label"></label>
                             <input asp-for="SubCat.Value" class="form-control" />
@@ -278,7 +278,7 @@
             </dl>
         </div>
         <div>
-            <a asp-page="./Edit" asp-route-id="@Model.SubCat.GUID" class="btn btn-primary">Edit</a>
+            <a asp-page="./Edit" asp-route-id="@Model.SubCat.ID" class="btn btn-primary">Edit</a>
             <a asp-page="./Index" class="btn btn-default">Back to List</a>
         </div>
     </div>

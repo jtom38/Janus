@@ -23,6 +23,7 @@ namespace Janus.Domain.Entities
         public ICollection<Status> Status { get; set; }
         public ICollection<Categories> Category { get; set; }
         public ICollection<Categories> SubCategory { get; set; }
+        public ICollection<TicketComments> TicketComments { get; set; }
 
         public Guid TenantID { get; set; }
     }

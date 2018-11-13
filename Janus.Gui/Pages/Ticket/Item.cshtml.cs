@@ -26,7 +26,7 @@ namespace Janus.Gui.Pages.Ticket
 
         //[TempData]
         [BindProperty]
-        public Janus.Domain.Entities.Ticket TicketInformation { get; set; }
+        public Domain.Entities.Ticket TicketInformation { get; set; }
 
         //[TempData]
         [BindProperty]

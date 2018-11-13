@@ -6,6 +6,11 @@ namespace Janus.Domain.Entities
 {
     public class WindowsUpdates
     {
+        public WindowsUpdates()
+        {
+            ComputerID = new HashSet<ComputerID>();
+        }
+
         public Guid ID { get; set; }                
 
         public string HotFixID { get; set; }

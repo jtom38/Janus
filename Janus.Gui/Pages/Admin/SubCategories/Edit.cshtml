@@ -1,27 +1,27 @@
 ﻿@page
 @model Janus.Gui.Pages.Admin.SubCategories.EditModel
 
-<h4>SubCategories</h4>
+<h4>SubSubCategories</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Categories.GUID" />
+            <input type="hidden" asp-for="SubCategories.ID" />
             <div class="form-group">
-                <label asp-for="Categories.Value" class="control-label"></label>
-                <input asp-for="Categories.Value" class="form-control" />
-                <span asp-validation-for="Categories.Value" class="text-danger"></span>
+                <label asp-for="SubCategories.Value" class="control-label"></label>
+                <input asp-for="SubCategories.Value" class="form-control" />
+                <span asp-validation-for="SubCategories.Value" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Categories.DateAdded" class="control-label"></label>
-                <input asp-for="Categories.DateAdded" class="form-control" />
-                <span asp-validation-for="Categories.DateAdded" class="text-danger"></span>
+                <label asp-for="SubCategories.DateAdded" class="control-label"></label>
+                <input asp-for="SubCategories.DateAdded" class="form-control" />
+                <span asp-validation-for="SubCategories.DateAdded" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Categories.AddedBy" class="control-label"></label>
-                <input asp-for="Categories.AddedBy" class="form-control" />
-                <span asp-validation-for="Categories.AddedBy" class="text-danger"></span>
+                <label asp-for="SubCategories.AddedBy" class="control-label"></label>
+                <input asp-for="SubCategories.AddedBy" class="form-control" />
+                <span asp-validation-for="SubCategories.AddedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

@@ -17,10 +17,9 @@ namespace Janus.Persistence.Configurations
             // Defines column type
             builder.Property(x => x.DateTimeCreated).HasColumnType("datetime");
             builder.Property(x => x.DateTimeEdited).HasColumnType("datetime");
-            builder.Property(x => x.CreatedBy).HasMaxLength(128);
-            builder.Property(x => x.TicketOwner).HasMaxLength(128);
-            builder.Property(x => x.SubmittedBy).HasMaxLength(128);
-            
+            builder.Property(x => x.CreatedBy);
+            builder.Property(x => x.TicketOwner);
+            builder.Property(x => x.SubmittedBy);                      
 
         }
     }

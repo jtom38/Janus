@@ -10,15 +10,14 @@
             <li><a href="#">Comments</a></li>
             <li><a href="#">Notes</a></li>
 
-            @if (string.IsNullOrEmpty(Model.TicketInformation.ComputerID))
-            {
+
                 <li class="sidebar-brand">Computer Details</li>
-                <li><a asp-page="./Ticket" asp-route-ViewAction="hardrive" asp-route-id="@Model.TicketInformation.GUID">Hard Drives</a></li>
+                <li><a asp-page="./Ticket" asp-route-ViewAction="hardrive" asp-route-id="@Model.TicketInformation.Computer">Hard Drives</a></li>
                 <li><a asp-page="./Ticket" asp-route-ViewAction="network">Network</a></li>
                 <li><a asp-page="./Ticket" asp-route-ViewAction="updates">Windows Updates</a></li>
                 <li><a asp-page="./Ticket" asp-route-ViewAction="client">Client</a></li>
 
-            }
+            
 
 
             <li class="sidebar-brand">Actions</li>
@@ -95,7 +94,7 @@
                         <input type="date" class="form-control" id="InputDateStarted" placeholder="@Model.TicketInformation.DateTimeStarted" readonly />
                     </div>
 
-                    @if (!string.IsNullOrEmpty(Model.TicketInformation.DateTimeFinished))
+                    @if (!string.IsNullOrEmpty(Model.TicketInformation.DateTimeFinished.ToString()))
                     {
                         <div class="form-group">
                             <label for="InputDateFinished"></label>
@@ -111,31 +110,7 @@
                             </div>
                         </div>
                     }
-
-                    <!--
-    This is an archive block
-    <div class="col-md-2">Status</div>
-    <div class="col-md-4">
-        <form method="post" asp-page-handler="UpdateStatus">
-            <div asp-validation-summary="ModelOnly"></div>
-            <input type="hidden" asp-for="TicketInformation.GUID" />
-            <button class="btn btn-default dropdown-toggle" type="button" id="categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                @Model.TicketInformation.StatusID
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="categoryMenu">
-                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="New" class="btn btn-default btn-block"> </li>
-                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Assigned" class="btn btn-default btn-block"> </li>
-                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Awaiting Input" class="btn btn-default btn-block"> </li>
-                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="On Hold" class="btn btn-default btn-block"> </li>
-                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="In Progress" class="btn btn-default btn-block"> </li>
-                <li> <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Resolved" class="btn btn-default btn-block"> </li>
-            </ul>
-        </form>
-    </div>
-        -->
-
-
+                                       
                     <hr />
 
                     <h4>Comments</h4>

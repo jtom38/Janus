@@ -9,6 +9,7 @@ namespace Janus.Domain.AppSettings
     /// </summary>
     public class AppSettings
     {
+        public string SqliteConnectionString { get; set; }
         public Debug Debug { get; set; }
     }
 }
