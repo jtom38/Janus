@@ -61,7 +61,7 @@ namespace Janus.Gui.Pages.Computers
                     .SingleOrDefaultAsync();
                 
                 ListDrives = await _context.HardDrives
-                    .Where(x => x.ComputerID == Item)
+                    .Where(x => x.Computer == Item)
                     .ToListAsync();
                 /*
                 ListNetwork = await _context.Network
@@ -70,7 +70,7 @@ namespace Janus.Gui.Pages.Computers
                     */
                 ListWindowsUpdates = await _context.WindowsUpdates
                    .Where(x => x.TenantID == _options.Value.Debug.TenantID)
-                   .Where(x => x.ComputerID == Item)
+                   .Where(x => x.Computer == Item)
                    .ToListAsync();
 
                 //we have a value to parse

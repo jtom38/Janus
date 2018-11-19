@@ -84,11 +84,15 @@ namespace Janus.Gui
                 app.UseExceptionHandler("/Error");
             }
 
+            UpdateDatatbase(app);
+
             app.UseStaticFiles();
             var options = new RewriteOptions().AddRedirectToHttps();
             app.UseRewriter();
 
             app.UseMvc();
+
+            
         }
     }
 }

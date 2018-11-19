@@ -19,11 +19,12 @@ namespace Janus.Domain.Entities
         public string SubmittedBy { get; set; }
         public string Title { get; set; }
 
-        public ComputerID Computer { get; set; }
         public Status Status { get; set; }
         public Categories Category { get; set; }
         public SubCategories SubCategory { get; set; }
         public ICollection<TicketComments> TicketComments { get; set; }
+
+        public ComputerID Computer { get; set; }
 
         public Guid TenantID { get; set; }
     }

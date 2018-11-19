@@ -6,10 +6,6 @@ namespace Janus.Domain.Entities
 {
     public class WindowsUpdates
     {
-        public WindowsUpdates()
-        {
-            ComputerID = new HashSet<ComputerID>();
-        }
 
         public Guid ID { get; set; }                
 
@@ -20,7 +16,7 @@ namespace Janus.Domain.Entities
         public string HostName { get; set; }
         public DateTime DateTimeAdded { get; set; }
 
-        public ICollection<ComputerID> ComputerID { get; set; }
+        public ComputerID Computer { get; set; }
 
         public Guid TenantID { get; set; }
     }

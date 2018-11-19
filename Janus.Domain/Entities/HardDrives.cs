@@ -6,10 +6,6 @@ namespace Janus.Domain.Entities
 {
     public class HardDrives
     {
-        public HardDrives()
-        {
-            ComputerID = new HashSet<ComputerID>();
-        }
 
         public Guid ID { get; set; }
         public string Name { get; set; }
@@ -21,7 +17,7 @@ namespace Janus.Domain.Entities
         public string DateTimeAdded { get; set; }
         public string DateTimeEdited { get; set; }
         
-        public ICollection<ComputerID> ComputerID { get; set; }
+        public ComputerID Computer { get; set; }
 
         public Guid TenantID { get; set; }
     }

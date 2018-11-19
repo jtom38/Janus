@@ -6,10 +6,6 @@ namespace Janus.Domain.Entities
 {
     public class Network
     {
-        public Network()
-        {
-            Computers = new HashSet<ComputerID>();
-        }
 
         public Guid ID { get; set; }
 
@@ -26,7 +22,7 @@ namespace Janus.Domain.Entities
         public string Description { get; set; }
         public string DnsDomain { get; set; }
 
-        public ICollection<ComputerID> Computers { get; set; }
+        public ComputerID Computer { get; set; }
 
         public Guid TenantID { get; set; }
     }
