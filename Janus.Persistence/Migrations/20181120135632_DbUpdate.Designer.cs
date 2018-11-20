@@ -3,14 +3,16 @@ using System;
 using Janus.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Janus.Persistence.Migrations
 {
     [DbContext(typeof(JanusDbContext))]
-    partial class JanusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181120135632_DbUpdate")]
+    partial class DbUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

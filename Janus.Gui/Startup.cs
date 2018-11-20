@@ -57,8 +57,13 @@ namespace Janus.Gui
             // We can now DI everything under AppSettings in the json.
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+            //services.AddDbContext<JanusDbContext>(options =>
+            //options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
+
             services.AddDbContext<JanusDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
+                options.UseNpgsql($"Host={};Database=Janus;Username:"));
+
+
 
             services.AddMemoryCache();
 

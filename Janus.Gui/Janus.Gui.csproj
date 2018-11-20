@@ -4,7 +4,7 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="TypeScript\Computers\ApiComputers.ts" />
+    <None Remove="wwwroot\TypeScript\Computers\ApiComputers.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
@@ -16,21 +16,20 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="wwwroot\TypeScript\Computers\ApiComputers.js" />
+    <None Include="wwwroot\TypeScript\Computers\ApiComputers.js.map" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Janus.Application\Janus.Application.csproj" />
     <ProjectReference Include="..\Janus.Infrastructure\Janus.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="TypeScript\Computers\ApiComputers.ts" />
+    <TypeScriptCompile Include="wwwroot\TypeScript\Computers\ApiComputers.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Pages\Ticket\Index - Copy.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Janus.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
