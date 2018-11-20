@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.SubCategories
 {
     public class DetailsModel : PageModel
     {
-        private DatabaseContext _context;
+        
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public DetailsModel()
+        public DetailsModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _options = options;
         }
 
-        public Model.Data.Collections.Categories SubCategories { get; set; }
+        public Domain.Entities.SubCategories SubCategories { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -29,9 +33,8 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             }
 
             //SubCategories = await _context.SubCategories.SingleOrDefaultAsync(m => m.Pk == id);
-            SubCategories = await _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Where(x => x.TenantID == "debug")
-                .Where(x => x.SubCategory == true)
+            SubCategories = await _context.SubCategories
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .FirstOrDefaultAsync();
 
             if (SubCategories == null)

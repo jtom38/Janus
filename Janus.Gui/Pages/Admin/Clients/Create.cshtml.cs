@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.NewFolder
 {
     public class CreateModel : PageModel
     {
-        private DatabaseContext _context;
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public CreateModel()
+        public CreateModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _options = options;
         }
 
         public IActionResult OnGet()
@@ -25,7 +28,7 @@ namespace Janus.Gui.Pages.Admin.NewFolder
         }
 
         [BindProperty]
-        public Model.Data.Collections.Clients Clients { get; set; }
+        public Domain.Entities.Clients Clients { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -34,8 +37,8 @@ namespace Janus.Gui.Pages.Admin.NewFolder
                 return Page();
             }
 
-            await _context.Clients.InsertAsync(Clients);
-            //await _context.SaveChangesAsync();
+            await _context.Clients.AddAsync(Clients);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

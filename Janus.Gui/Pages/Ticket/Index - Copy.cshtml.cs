@@ -8,6 +8,8 @@ using Janus.Persistence;
 using Janus.Domain.Entities;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Janus.Domain.AppSettings;
 
 namespace Janus.Gui.Pages.Ticket
 {
@@ -15,14 +17,12 @@ namespace Janus.Gui.Pages.Ticket
     {
 
         private JanusDbContext _context;
-
-        //private readonly IJanusMongoDbContext _Repository;
-        //private readonly IMongoCollection<Tickets> _CollectionTickets;
-        //readonly IMongoCollection<Techs> _CollectionTechs;
+        private IOptions<AppSettings> _options;
         
-        public IndexModel(JanusDbContext _context)
+        public IndexModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-
+            _context = context;
+            _options = options;
         }
 
         public IList<Janus.Domain.Entities.Ticket> Items { get; set; }
@@ -81,7 +81,7 @@ namespace Janus.Gui.Pages.Ticket
                 SetCookie("Tickets.Index.Filter", "*");
 
                 Items = await _context.Tickets
-                    .Where(x => x.ID == "Debug").ToList();
+                    .Where(x => x.ID == _options.Value.Debug.TenantID).ToList();
 
                 Items = await _context.<Janus.Domain.Entities.Ticket>()
                     .Where(x => x.TenantID == "debug")
@@ -90,7 +90,7 @@ namespace Janus.Gui.Pages.Ticket
             else if(filter == "AllOpen")
             {
                 SetCookie("Tickets.Index.Filter", "AllOpen");
-                Items = await _CollectionTickets.AsQueryable<Model.Data.Collections.Tickets>()
+                Items = await _context.Tickets
                     .Where(x => x.TenantID == "debug")
                     .Where(x => x.StatusID != "Closed")
                     .ToListAsync();
@@ -113,60 +113,56 @@ namespace Janus.Gui.Pages.Ticket
                 //BaseAddress = "http://localhost:55579"
             //};
              
-            //Items = await apiTickets.GetAllItemsAsync();
-            
+            //Items = await apiTickets.GetAllItemsAsync();            
         }
 
         public async Task<IActionResult> OnPostUpdateStatusAsync()
         {
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            ////_context.Attach(TicketInformation).State = EntityState.Modified;
-            //var z = await _context.Tickets
-            //    .SingleOrDefaultAsync(x => x.Pk == TicketInformation.Pk);
+            _context.Attach(TicketInformation).State = EntityState.Modified;
+            var z = await _context.Tickets
+                .SingleOrDefaultAsync(x => x.ID == TicketInformation.ID);
 
-            //if (z != null)
-            //{
-            //    if (TicketInformation.Status == "Resolved")
-            //    {
-            //        z.TicketFinished = DateTime.Now.ToString();
-            //    }
+            if (z != null)
+            {
+                if (TicketInformation.Status.ToString() == "Resolved")
+                {
+                    z.DateTimeFinished = DateTime.Now;
+                }
 
-            //    z.Status = TicketInformation.Status;
-            //    _context.Update(z);
-            //}
+                z.Status = TicketInformation.Status;
+                _context.Update(z);
+            }
 
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!TicketsInformationExists(TicketInformation.Pk))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TicketsInformationExists(TicketInformation.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            ////return Page();
-            return Redirect($"./Tickets");
+            return Page();
+            //return Redirect($"./Tickets");
         }
 
         private bool TicketsInformationExists(Guid id)
         {
             //returns bool
             return _context.Tickets.Any(e => e.ID.Equals(id));
-
-            //return _CollectionTickets.AsQueryable<Janus.Domain.Entities.Ticket>()
-                //.Any(x => x.ID == id);
         }
 
         public void SetCookie(string key, string value)

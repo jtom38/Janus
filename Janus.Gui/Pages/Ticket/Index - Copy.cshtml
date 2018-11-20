@@ -1,4 +1,5 @@
 ﻿@page
+
 @model Janus.Gui.Pages.Ticket.IndexModel
 
 @{
@@ -79,38 +80,38 @@
                                 int counter = 0;
                                 <tr>
                                     <td>
-                                        <a asp-page="/Ticket/Item" asp-route-id="@item.GUID" class="btn btn-primary btn-block">@item.TicketNumber</a>
+                                        <a asp-page="/Ticket/Item" asp-route-id="@item.ID" class="btn btn-primary btn-block">@item.TicketNumber</a>
                                     </td>
                                     <td>
                                         <form method="post" asp-page-handler="UpdateStatus">
                                             <div asp-validation-summary="ModelOnly"></div>
-                                            <input type="hidden" asp-for="@Model.TicketInformation.GUID" value="@item.GUID" />
+                                            <input type="hidden" asp-for="@Model.TicketInformation.ID" value="@item.ID" />
                                             <div class="btn-group btn-block">
                                                 <button class="btn btn-default btn-block dropdown-toggle" type="button" id="@counter + categoryMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                    @item.StatusID
+                                                    @item.Status
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="@counter + categoryMenu">
                                                     <li>
-                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="New" class="btn btn-default btn-block">
+                                                        <input type="submit" asp-for="@Model.TicketInformation.Status" value="New" class="btn btn-default btn-block">
                                                     </li>
                                                     <li>
-                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Assigned" class="btn btn-default btn-block">
-                                                    </li>
-
-                                                    <li>
-                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Awaiting Input" class="btn btn-default btn-block">
+                                                        <input type="submit" asp-for="@Model.TicketInformation.Status" value="Assigned" class="btn btn-default btn-block">
                                                     </li>
 
                                                     <li>
-                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="On Hold" class="btn btn-default btn-block">
-                                                    </li>
-                                                    <li>
-                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="In Progress" class="btn btn-default btn-block">
+                                                        <input type="submit" asp-for="@Model.TicketInformation.Status" value="Awaiting Input" class="btn btn-default btn-block">
                                                     </li>
 
                                                     <li>
-                                                        <input type="submit" asp-for="@Model.TicketInformation.StatusID" value="Resolved" class="btn btn-default btn-block">
+                                                        <input type="submit" asp-for="@Model.TicketInformation.Status" value="On Hold" class="btn btn-default btn-block">
+                                                    </li>
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.Status" value="In Progress" class="btn btn-default btn-block">
+                                                    </li>
+
+                                                    <li>
+                                                        <input type="submit" asp-for="@Model.TicketInformation.Status" value="Resolved" class="btn btn-default btn-block">
                                                     </li>
                                                 </ul>
                                             </div>
@@ -121,13 +122,13 @@
                                         <button class="btn btn-default disabled btn-block">@item.TicketOwner</button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-default disabled btn-block">@item.</button>
+                                        <button class="btn btn-default disabled btn-block">@item.Status</button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-default disabled btn-block">@item.CategoryID</button>
+                                        <button class="btn btn-default disabled btn-block">@item.Category</button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-default disabled btn-block">@item.SubCategoryID</button>
+                                        <button class="btn btn-default disabled btn-block">@item.SubCategory</button>
                                     </td>
                                     <td>
                                         <button class="btn btn-default disabled btn-block">@item.DateTimeCreated</button>
@@ -162,7 +163,7 @@
                                     <a href="" data-toggle="modal" data-target="#myModal">
                                         <img src="~/images/Navbar/icons8-open-in-popup-96.png" width="32" />
                                     </a>
-                                    <a asp-page="./Ticket" asp-route-id="@item.GUID">
+                                    <a asp-page="./Ticket" asp-route-id="@item.ID">
                                         <img src="~/images/Navbar/icons8-view-details-96.png" width="32" />
                                     </a>
                                 </div>

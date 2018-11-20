@@ -48,19 +48,19 @@
 
                         <label for="InputCategory">Category</label>
                         <input type="text" class="form-control" placeholder="Field: Category" aria-describedby="InputCategory"
-                               asp-for="Tickets.CategoryID" />
+                               asp-for="Tickets.Category" />
 
                         <br />
 
                         <label for="InputSubCategory">SubCategory</label>
                         <input type="text" class="form-control" placeholder="Field: SubCategory" aria-describedby="InputSubCategory"
-                               asp-for="Tickets.SubCategoryID" />
+                               asp-for="Tickets.SubCategory" />
 
                         <br />
 
                         <label for="InputComputerName">Computer Name</label>
                         <input type="text" class="form-control" placeholder="Field: Computer Name" aria-describedby="InputComputerName"
-                               asp-for="Tickets.ComputerID" />
+                               asp-for="Tickets.Computer" />
 
                         <br />
 
@@ -200,10 +200,10 @@
                             {
                                 <tr>
                                     <td>
-                                        <a asp-page="/Tickets/Ticket" asp-route-id="@item.GUID" class="btn btn-primary btn-block">@item.TicketNumber</a>
+                                        <a asp-page="/Tickets/Ticket" asp-route-id="@item.ID" class="btn btn-primary btn-block">@item.TicketNumber</a>
                                     </td>
                                     <td>
-                                        <button class="btn btn-default disabled btn-block">@item.StatusID</button>
+                                        <button class="btn btn-default disabled btn-block">@item.Status</button>
                                     </td>
                                     <td>
                                         <button class="btn btn-default disabled btn-block">@item.TicketOwner</button>
@@ -212,10 +212,10 @@
                                         <button class="btn btn-default disabled btn-block">@item.</button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-default disabled btn-block">@item.CategoryID</button>
+                                        <button class="btn btn-default disabled btn-block">@item.Category</button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-default disabled btn-block">@item.SubCategoryID</button>
+                                        <button class="btn btn-default disabled btn-block">@item.SubCategory</button>
                                     </td>
                                     <td>
                                         <button class="btn btn-default disabled btn-block">@item.DateTimeCreated</button>

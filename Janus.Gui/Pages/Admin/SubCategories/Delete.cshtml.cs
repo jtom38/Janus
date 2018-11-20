@@ -2,27 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.SubCategories
 {
     public class DeleteModel : PageModel
     {
-        private DatabaseContext _context;
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public DeleteModel(DatabaseContext context)
+        public DeleteModel(JanusDbContext context, IOptions<AppSettings> options)
         {
             _context = context;
+            _options = options;
         }
 
         [BindProperty]
-        public Model.Data.Collections.Categories SubCategories { get; set; }
+        public Domain.Entities.SubCategories SubCategories { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             if (id == null)
             {
@@ -30,10 +33,9 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             }
 
             //SubCategories = await _context.SubCategories.SingleOrDefaultAsync(m => m.Pk == id);
-            SubCategories = await _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Where(x => x.TenantID == "debug")
-                .Where(x => x.SubCategory == true)
-                .Where(x => x.GUID == id)
+            SubCategories = await _context.SubCategories
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
+                .Where(x => x.ID == id)
                 .FirstOrDefaultAsync();
 
             if (SubCategories == null)
@@ -43,7 +45,7 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(Guid id)
         {
             if (id == null)
             {
@@ -51,15 +53,14 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             }
 
             //SubCategories = await _context.SubCategories.FindAsync(id);
-            SubCategories = await _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Where(x => x.TenantID == "debug")
-                .Where(x => x.SubCategory == true)
+            SubCategories = await _context.SubCategories
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .FirstOrDefaultAsync();
 
             if (SubCategories != null)
             {
-                await _context.Categories.DeleteAsync(SubCategories.GUID);
-                //await _context.SaveChangesAsync();
+                _context.SubCategories.Remove(SubCategories);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");

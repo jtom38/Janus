@@ -51,9 +51,9 @@
                                 @Html.DisplayFor(modelItem => item.DateLogged)
                             </td>
                             <td>
-                                <a asp-page="./Edit" asp-route-id="@item.GUID" class="btn btn-default">Edit</a>
-                                <a asp-page="./Details" asp-route-id="@item.GUID" class="btn btn-default">Details</a>
-                                <a asp-page="./Delete" asp-route-id="@item.GUID" class="btn btn-default">Delete</a>
+                                <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-default">Edit</a>
+                                <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-default">Details</a>
+                                <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-default">Delete</a>
                             </td>
                         </tr>
                     }

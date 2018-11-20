@@ -1,31 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MongoDB.Driver;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-//using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using MongoDB.Driver.Linq;
-using Janus.Model.Data;
+using Janus.Persistence;
+using Janus.Domain.AppSettings;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.Clients
 {
     public class IndexModel : PageModel
     {
-        //private readonly JanusGUI.Models.DatabaseContext _context;
-        private DatabaseContext _context;
+        
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public IndexModel()
+        public IndexModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _options = options;
         }
 
-        public IList<Model.Data.Collections.Clients> CliList { get; set; }
+        public IList<Domain.Entities.Clients> CliList { get; set; }
         
         [BindProperty]
-        public Model.Data.Collections.Clients Cli { get; set; }
+        public Domain.Entities.Clients Cli { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public string ViewAction { get; set; }
@@ -34,7 +36,7 @@ namespace Janus.Gui.Pages.Admin.Clients
         public string ViewMode { get; set; }
 
         [BindProperty(SupportsGet =true)]
-        public string id { get; set; }
+        public Guid id { get; set; }
 
         string CookieViewMode = "Admin.Clients.Index.View";
 
@@ -46,8 +48,8 @@ namespace Janus.Gui.Pages.Admin.Clients
 
             if (ViewAction == "index")
             {
-                CliList = await _context.ClientsCollection.AsQueryable<Model.Data.Collections.Clients>()
-                    .Where(x => x.TenantID == "debug")
+                CliList = await _context.Clients
+                    .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                     .ToListAsync();
             }
             else if(ViewAction == "create")
@@ -62,9 +64,9 @@ namespace Janus.Gui.Pages.Admin.Clients
                 }
 
                 //Clients = await _context.Clients.SingleOrDefaultAsync(m => m.Pk == id);
-                Cli = await _context.ClientsCollection.AsQueryable<Model.Data.Collections.Clients>()
-                    .Where(x => x.TenantID == "debug")
-                    .Where(x => x.GUID == id)
+                Cli = await _context.Clients
+                    .Where(x => x.TenantID == _options.Value.Debug.TenantID)
+                    .Where(x => x.ID == id)
                     .FirstOrDefaultAsync();
 
                 if (Cli == null)
@@ -78,7 +80,7 @@ namespace Janus.Gui.Pages.Admin.Clients
 
         }
 
-        public async Task<IActionResult> OnPostAsync(string id)
+        public async Task<IActionResult> OnPostAsync(Guid id)
         {
             if (id == null)
             {
@@ -87,26 +89,26 @@ namespace Janus.Gui.Pages.Admin.Clients
 
             if (ViewAction.Equals("delete"))
             {
-                Cli = await _context.ClientsCollection.AsQueryable<Model.Data.Collections.Clients>()
-                    .Where(x => x.TenantID == "debug")
-                    .Where(x => x.GUID == id)
+                Cli = await _context.Clients
+                    .Where(x => x.TenantID == _options.Value.Debug.TenantID)
+                    .Where(x => x.ID == id)
                     .FirstOrDefaultAsync();
 
                 if (Cli != null)
                 {
-                    await _context.Clients.DeleteAsync(Cli.GUID);
-                    //await _context.SaveChangesAsync();
+                    _context.Clients.Remove(Cli);
+                    await _context.SaveChangesAsync();
                 }
             }
             else if (ViewAction.Equals("edit"))
             {
                 //need the _id to update
-                var rec = await _context.Clients.GetFirstByGUIDAsync(Cli.GUID);
-                Cli.ID = rec.ID;
+                var rec = _context.Clients.Where(x => x.ID == id);
+                //Cli.ID = rec.ID;
                 
                 try
                 {
-                    await _context.Clients.UpdateAsync(rec.ID, Cli);
+                    //await _context.Clients.UpdateAsync(rec.ID, Cli);
                     //await _context.SaveChangesAsync();
                 }
                 catch (Exception ex)

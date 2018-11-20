@@ -11,13 +11,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Janus.Gui.Pages.Admin.Categories
 {
     public class CreateModel : PageModel
-    {
-        //private readonly JanusGUI.Models.DatabaseContext _context;
+    {        
         private JanusDbContext _context;
 
-        public CreateModel()
+        public CreateModel(JanusDbContext context)
         {
-            //_context = new JanusDbContext();
+            _context = context;
         }
 
         public IActionResult OnGet()
@@ -35,7 +34,7 @@ namespace Janus.Gui.Pages.Admin.Categories
                 return Page();
             }
 
-            Categories.ID = Guid.NewGuid().ToString();
+            Categories.ID = Guid.NewGuid();
             Categories.DateAdded = DateTime.Now;
             Categories.AddedBy = "User";
 

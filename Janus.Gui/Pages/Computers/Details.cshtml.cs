@@ -2,25 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Janus.Domain.AppSettings;
 using Janus.Domain.Entities;
 using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Computers
 {
     public class DetailsModel : PageModel
     {
         private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public DetailsModel(JanusDbContext context)
+        public DetailsModel(JanusDbContext context, IOptions<AppSettings> options)
         {
             _context = context;
+            _options = options;
         }
 
         [BindProperty(SupportsGet = true)]
-        public string id { get; set; }
+        public Guid id { get; set; }
 
         [BindProperty(SupportsGet =true)]
         public string ViewAction { get; set; }
@@ -45,7 +49,7 @@ namespace Janus.Gui.Pages.Computers
             if (string.IsNullOrEmpty(ViewMode)) { ViewMode = "table"; }
             if (string.IsNullOrEmpty(ViewAction)) { ViewAction = "bios"; }
 
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id.ToString()))
             {
                 return Redirect("./Computers/Index");
             }
@@ -57,20 +61,20 @@ namespace Janus.Gui.Pages.Computers
                     .SingleOrDefaultAsync();
                 
                 ListDrives = await _context.HardDrives
-                    .Where(x => x.ComputerID == Item.GUID)
+                    .Where(x => x.Computer == Item)
                     .ToListAsync();
-
+                /*
                 ListNetwork = await _context.Network
-                    .Where(x => x.ComputerID == Item.GUID)
+                    .Where(x => x.ComputerID == Item)
                     .ToListAsync();
-
+                    */
                 ListWindowsUpdates = await _context.WindowsUpdates
-                   .Where(x => x.TenantID == "debug")
-                   .Where(x => x.ComputerID == Item.ComputerName)
+                   .Where(x => x.TenantID == _options.Value.Debug.TenantID)
+                   .Where(x => x.Computer == Item)
                    .ToListAsync();
 
                 //we have a value to parse
-                if (Item.TenantID != "debug")
+                if (Item.TenantID != _options.Value.Debug.TenantID)
                 {
                     return Redirect("./Computers/Index");
                 }

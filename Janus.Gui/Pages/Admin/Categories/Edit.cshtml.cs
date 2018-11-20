@@ -2,27 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.Categories
 {
     public class EditModel : PageModel
     {
-        //private readonly JanusGUI.Models.DatabaseContext _context;
-        private DatabaseContext _context;
+        
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public EditModel()
+        public EditModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _options = options;
         }
 
         [BindProperty]
-        public Model.Data.Collections.Categories Categories { get; set; }
+        public Domain.Entities.Categories Categories { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -32,8 +35,8 @@ namespace Janus.Gui.Pages.Admin.Categories
             }
 
             //Categories = await _context.Categories.SingleOrDefaultAsync(m => m.Pk == id);
-            Categories = await _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Where(x => x.TenantID == "debug")
+            Categories = await _context.Categories
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .FirstOrDefaultAsync();
 
             if (Categories == null)
@@ -59,7 +62,7 @@ namespace Janus.Gui.Pages.Admin.Categories
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                if (!CategoriesExists(Categories.GUID))
+                if (!CategoriesExists(Categories.ID))
                 {
                     return NotFound();
                 }
@@ -72,11 +75,11 @@ namespace Janus.Gui.Pages.Admin.Categories
             return RedirectToPage("./Index");
         }
 
-        private bool CategoriesExists(string id)
+        private bool CategoriesExists(Guid id)
         {
             //return _context.Categories.Any(e => e.Pk == id);
-            return _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Any(x => x.GUID == id);
+            return _context.Categories
+                .Any(x => x.ID == id);
         }
     }
 }

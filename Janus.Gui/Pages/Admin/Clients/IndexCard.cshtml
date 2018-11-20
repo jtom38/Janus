@@ -1,5 +1,5 @@
 ﻿@page
-@model IEnumerable<Janus.Model.Data.Collections.Clients>
+@model IEnumerable<Janus.Domain.Entities.Clients>
 @{
     int counter = 0;
 
@@ -31,9 +31,9 @@
                             </div>
                             <div id="@data" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@panel">
                                 <div class="panel-body">
-                                    <a asp-page="./Edit" asp-route-id="@item.GUID" class="btn btn-default btn-block">Edit</a>
-                                    <a asp-page="./Details" asp-route-id="@item.GUID" class="btn btn-default btn-block">Details</a>
-                                    <a asp-page="./Delete" asp-route-id="@item.GUID" class="btn btn-default btn-block">Delete</a>
+                                    <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-default btn-block">Edit</a>
+                                    <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-default btn-block">Details</a>
+                                    <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-default btn-block">Delete</a>
                                 </div>
                             </div>
                         </div>

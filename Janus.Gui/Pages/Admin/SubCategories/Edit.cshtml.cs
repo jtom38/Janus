@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.SubCategories
 {
     public class EditModel : PageModel
     {
-        private DatabaseContext _context;
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public EditModel()
+        public EditModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _options = options;
         }
 
         [BindProperty]
-        public Model.Data.Collections.Categories Categories { get; set; }
+        public Domain.Entities.SubCategories SubCategories { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -31,12 +34,11 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             }
 
             //Categories = await _context.Categories.SingleOrDefaultAsync(m => m.Pk == id);
-            Categories = await _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Where(x => x.TenantID == "debug")
-                .Where(x => x.SubCategory == true)
+            SubCategories = await _context.SubCategories
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .FirstOrDefaultAsync();
 
-            if (Categories == null)
+            if (SubCategories == null)
             {
                 return NotFound();
             }
@@ -50,15 +52,15 @@ namespace Janus.Gui.Pages.Admin.SubCategories
                 return Page();
             }
 
-            //_context.Attach(SubCategories).State = EntityState.Modified;
+            _context.Attach(SubCategories).State = EntityState.Modified;
 
             try
             {
-                //await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                if (!SubCategoriesExists(Categories.GUID))
+                if (!SubCategoriesExists(SubCategories.ID))
                 {
                     return NotFound();
                 }
@@ -71,11 +73,10 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             return RedirectToPage("./Index");
         }
 
-        private bool SubCategoriesExists(string id)
+        private bool SubCategoriesExists(Guid id)
         {
-            //return _context.SubCategories.Any(e => e.Pk == id);
-            return _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Any(x => x.GUID == id);
+            return _context.SubCategories.Any(e => e.ID == id);
+            
         }
     }
 }

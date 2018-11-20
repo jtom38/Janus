@@ -5,23 +5,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
-using Janus.Model.Data;
+using Janus.Persistence;
+using Janus.Domain.AppSettings;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace Janus.Gui.Pages.Admin.Categories
 {
     public class IndexModel : PageModel
     {
-        //private readonly JanusGUI.Models.DatabaseContext _context;
-        private DatabaseContext _context;
+        
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public IndexModel()
+        public IndexModel(JanusDbContext context, IOptions<AppSettings> options)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _options = options;
         }
 
-        public IList<Model.Data.Collections.Categories> Categories { get;set; }
+        public IList<Domain.Entities.Categories> Categories { get;set; }
 
         [BindProperty]
         public string ViewMode { get; set; }
@@ -33,9 +36,8 @@ namespace Janus.Gui.Pages.Admin.Categories
             ManageView(ViewMode);
 
             //Categories = await _context.Categories.ToListAsync();
-            Categories = await _context.CategoriesCollection.AsQueryable<Model.Data.Collections.Categories>()
-                .Where(x => x.TenantID == "debug")
-                .Where(x => x.SubCategory == false)
+            Categories = await _context.Categories
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .ToListAsync();
 
             var cat = Categories.Count();

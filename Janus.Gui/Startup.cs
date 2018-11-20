@@ -1,4 +1,4 @@
-using Janus.Infrastructure.AppSettings;
+using Janus.Domain.AppSettings;
 using Janus.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Janus.Gui
 {
@@ -32,9 +33,6 @@ namespace Janus.Gui
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.Configure<Debug>(
-                Configuration.GetSection(nameof(Debug)));
-
             // Authentication - WIP
             services.AddAuthentication(options =>
             {
@@ -48,24 +46,29 @@ namespace Janus.Gui
                     options.PageViewLocationFormats.Add("/Pages/Partials/{0}.cshtml");
                 });
 
-            // MongoDb Settings
-            /*
-            services.Configure<MongoSettings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoDb:ConnectionString").Value;
-                options.Database = Configuration.GetSection("MongoDb:Database").Value;
-            });
-
-            // Add DB Connection
-            services.AddTransient<IJanusDbContext, JanusDbContext>();
-            */
-
+            /* // If you want to use this on MsSql here you go
             services.AddDbContext<JanusDbContext>(options =>
                 options.UseSqlServer("Server=localhost\\sqlexpress;Database=Janus;Trusted_Connection=True;Application Name=Janus;"));
+            */
+
+            // Lets us use IOptions<T> with DI
+            services.AddOptions();
+            
+            // We can now DI everything under AppSettings in the json.
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            services.AddDbContext<JanusDbContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
 
             services.AddMemoryCache();
-            services.AddSession();                       
 
+            services.AddSession();
+            /*
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+            */
             //services.AddProgressiveWebApp("manifest.json");
             //services.AddProgressiveWebApp();
             services.Configure<MvcOptions>(options =>
@@ -88,11 +91,15 @@ namespace Janus.Gui
                 app.UseExceptionHandler("/Error");
             }
 
+            //app.ApplicationServices.GetService<JanusDbContext>().Database.Migrate();
+
             app.UseStaticFiles();
             var options = new RewriteOptions().AddRedirectToHttps();
             app.UseRewriter();
 
             app.UseMvc();
+
+            
         }
     }
 }

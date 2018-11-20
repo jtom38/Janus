@@ -5,7 +5,6 @@
 
 # Remove Config files
 ConnectionString.json
-appsettings.json
 
 # I think this was something linux related
 *.directory

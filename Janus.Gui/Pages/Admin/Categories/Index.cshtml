@@ -49,7 +49,7 @@
                             <div class="caption">
                                 <div class="card-shell">
                                     <div class="card-header">
-                                        <h4 class="text-center">@item.GUID</h4>
+                                        <h4 class="text-center">@item.ID</h4>
                                     </div>
 
                                     <div class="card-row">
@@ -67,9 +67,9 @@
                                             </div>
                                             <div id="@data" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@panel">
                                                 <div class="panel-body">
-                                                    <a asp-page="./Edit" asp-route-id="@item.GUID" class="btn btn-default btn-block">Edit</a>
-                                                    <a asp-page="./Details" asp-route-id="@item.GUID" class="btn btn-default btn-block">Details</a>
-                                                    <a asp-page="./Delete" asp-route-id="@item.GUID" class="btn btn-default btn-block">Delete</a>
+                                                    <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-default btn-block">Edit</a>
+                                                    <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-default btn-block">Details</a>
+                                                    <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-default btn-block">Delete</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -119,9 +119,9 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a asp-page="./Edit" asp-route-id="@item.GUID" class="btn btn-default">Edit</a>
-                                    <a asp-page="./Details" asp-route-id="@item.GUID" class="btn btn-default">Details</a>
-                                    <a asp-page="./Delete" asp-route-id="@item.GUID" class="btn btn-default">Delete</a>
+                                    <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-default">Edit</a>
+                                    <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-default">Details</a>
+                                    <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-default">Delete</a>
                                 </div>
 
                             </td>

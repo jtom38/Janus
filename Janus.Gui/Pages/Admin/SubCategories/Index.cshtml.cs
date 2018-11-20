@@ -19,10 +19,10 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             _context = context;
         }
 
-        public IList<Categories> SubCatList { get;set; }
+        public IList<Domain.Entities.Categories> SubCatList { get;set; }
 
         [BindProperty]
-        public Categories SubCat { get; set; }
+        public Domain.Entities.Categories SubCat { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string ViewAction { get; set; }
@@ -37,7 +37,8 @@ namespace Janus.Gui.Pages.Admin.SubCategories
 
         public async Task<IActionResult> OnGetAsync()
         {
-            //SubCategories = await _context.SubCategories.ToListAsync();
+            /*
+            SubCatList = await _context.SubCategories.ToListAsync();
             
             if (string.IsNullOrEmpty(ViewAction))
             {
@@ -72,12 +73,13 @@ namespace Janus.Gui.Pages.Admin.SubCategories
                 }
             }
 
-
+            */
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            /*
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -100,7 +102,7 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             else if (ViewAction.Equals("edit"))
             {
                 //need the _id to update
-                var rec = await _context.Categories.(SubCat.GUID);
+                var rec = await _context.Categories(SubCat.ID);
                 SubCat.ID = rec.ID;
                 SubCat.SubCategory = true;
                 try
@@ -117,7 +119,7 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             {
                 SubCat = await _context.Categories
                     .Where(x => x.TenantID == "debug")
-                    .Where(x => x.GUID == SubCat.GUID)
+                    .Where(x => x.ID == SubCat.GUID)
                     .Where(x => x.SubCategory == true)
                     .FirstOrDefaultAsync();
 
@@ -127,6 +129,7 @@ namespace Janus.Gui.Pages.Admin.SubCategories
                     await _context.SaveChangesAsync();
                 }
             }
+            */
             
             return RedirectToPage("./Index");
         }

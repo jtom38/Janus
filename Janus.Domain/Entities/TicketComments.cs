@@ -6,6 +6,7 @@ namespace Janus.Domain.Entities
 {
     public class TicketComments
     {
+
         public Guid ID { get; set; }
         
         public string Message { get; set; }
@@ -13,5 +14,7 @@ namespace Janus.Domain.Entities
         public string DateTimeCreated { get; set; }
 
         public Guid TicketID { get; set; }
+
+        public Ticket Tickets { get; private set; }
     }
 }

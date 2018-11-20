@@ -6,6 +6,7 @@ namespace Janus.Domain.Entities
 {
     public class Network
     {
+
         public Guid ID { get; set; }
 
         public string IpAddressV4 { get; set; }
@@ -18,9 +19,10 @@ namespace Janus.Domain.Entities
         public bool DhcpEnabled { get; set; }
         public string DhcpServer { get; set; }
         public DateTime? DateTimeAdded { get; set; }
-        public string ComputerID { get; set; }
         public string Description { get; set; }
         public string DnsDomain { get; set; }
+
+        public ComputerID Computer { get; set; }
 
         public Guid TenantID { get; set; }
     }

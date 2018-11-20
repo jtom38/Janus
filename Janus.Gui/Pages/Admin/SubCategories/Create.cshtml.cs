@@ -1,18 +1,21 @@
 ﻿using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.SubCategories
 {
     public class CreateModel : PageModel
     {
-        //private DatabaseContext _context;
-        private DatabaseContext _context;
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _config;
 
-        public CreateModel()
+        public CreateModel(JanusDbContext context, IOptions<AppSettings> config)
         {
-            _context = new DatabaseContext();
+            _context = context;
+            _config = config;
         }
 
         public IActionResult OnGet()
@@ -21,7 +24,7 @@ namespace Janus.Gui.Pages.Admin.SubCategories
         }
 
         [BindProperty]
-        public Model.Data.Collections.Categories SubCategories { get; set; }
+        public Domain.Entities.SubCategories SubCategories { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -29,12 +32,11 @@ namespace Janus.Gui.Pages.Admin.SubCategories
             {
                 return Page();
             }
+            
+            SubCategories.TenantID = _config.Value.Debug.TenantID;
 
-            SubCategories.SubCategory = true;
-            SubCategories.TenantID = "debug";
-
-            await _context.Categories.InsertAsync(SubCategories);
-            //await _context.SaveChangesAsync();
+            await _context.SubCategories.AddAsync(SubCategories);
+            await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

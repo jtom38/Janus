@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Janus.Model.Data;
+using Janus.Domain.AppSettings;
+using Janus.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
+using Microsoft.Extensions.Options;
 
 namespace Janus.Gui.Pages.Admin.Techs
 {
     public class DetailsModel : PageModel
     {
-        private DatabaseContext _context;
+        private JanusDbContext _context;
+        private IOptions<AppSettings> _options;
 
-        public DetailsModel(DatabaseContext context)
+        public DetailsModel(JanusDbContext context, IOptions<AppSettings> options)
         {
             _context = context;
+            _options = options;
         }
 
-        public Model.Data.Collections.Techs Techs { get; set; }
+        public Domain.Entities.Techs Techs { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             if (id == null)
             {
@@ -29,9 +32,9 @@ namespace Janus.Gui.Pages.Admin.Techs
             }
 
             //Techs = await _context.Techs.SingleOrDefaultAsync(m => m.Pk == id);
-            Techs = await _context.TechsCollection.AsQueryable<Model.Data.Collections.Techs>()
-                .Where(x => x.TenantID == "debug")
-                .Where(x => x.GUID == id)
+            Techs = await _context.Techs
+                .Where(x => x.TenantID == _options.Value.Debug.TenantID)
+                .Where(x => x.ID == id)
                 .FirstOrDefaultAsync();
 
             if (Techs == null)

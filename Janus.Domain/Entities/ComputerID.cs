@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Janus.Domain.Entities
 {
@@ -20,9 +19,16 @@ namespace Janus.Domain.Entities
         public string BiosStatus { get; set; }
         public string BiosSerialNumber { get; set; }
         public DateTime DateTimeUpdated { get; set; }
+        public Guid TicketID { get; set; }
+        public Guid HardDriveID { get; set; }
+        public Guid NetworkID { get; set; }
+        public Guid WindowsUpdatesID { get; set; }
 
-        public ICollection<HardDrives> HardDrives { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
+
+        public ICollection<HardDrives> HardDrives { get; set; }        
+        public ICollection<Network> Network { get; set; }
+        public ICollection<WindowsUpdates> WindowsUpdates { get; set; }
 
         public Guid TenantID { get; set; }
     }
