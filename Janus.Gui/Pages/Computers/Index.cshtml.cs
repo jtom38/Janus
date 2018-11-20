@@ -40,10 +40,11 @@ namespace Janus.Gui.Pages.Computers
         public async Task OnGetAsync()
         {
             if (string.IsNullOrEmpty(ViewMode)) { ViewMode = "table"; }
-
+            /*
             ListComputer = await _context.ComputerIDs.AsQueryable<Domain.Entities.ComputerID>()
                 .Where(x => x.TenantID == _options.Value.Debug.TenantID)
                 .ToListAsync();
+                */
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Janus.Gui
 {
@@ -60,8 +61,14 @@ namespace Janus.Gui
                 options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
 
             services.AddMemoryCache();
-            services.AddSession();                       
 
+            services.AddSession();
+            /*
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+            */
             //services.AddProgressiveWebApp("manifest.json");
             //services.AddProgressiveWebApp();
             services.Configure<MvcOptions>(options =>
@@ -84,7 +91,7 @@ namespace Janus.Gui
                 app.UseExceptionHandler("/Error");
             }
 
-            UpdateDatatbase(app);
+            //app.ApplicationServices.GetService<JanusDbContext>().Database.Migrate();
 
             app.UseStaticFiles();
             var options = new RewriteOptions().AddRedirectToHttps();
